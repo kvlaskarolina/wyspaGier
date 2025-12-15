@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "Pi/+9nyMHRw=",
+  "success": true,
+  "projectFilePath": "/Users/karo/Desktop/code/studia-sem5/projektcplotek+wzorce/WyspaGier/WyspaGier.csproj",
+  "expectedPackageFiles": [
+    "/Users/karo/.nuget/packages/microsoft.aspnetcore.app.internal.assets/10.0.1/microsoft.aspnetcore.app.internal.assets.10.0.1.nupkg.sha512"
+  ],
+  "logs": []
+}

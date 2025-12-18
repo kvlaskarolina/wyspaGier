@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("WyspaGier")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+251b843d51a718ba9fffb8d0c771c7b329bb2771")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+7c11c9f7988908fea2f05efe83bae3bc157c8a9c")]
 [assembly: System.Reflection.AssemblyProductAttribute("WyspaGier")]
 [assembly: System.Reflection.AssemblyTitleAttribute("WyspaGier")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

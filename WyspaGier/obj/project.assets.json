@@ -50,11 +50,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/karo/Desktop/code/studia-sem5/projektcplotek+wzorce/WyspaGier/WyspaGier.csproj",
+      "projectUniqueName": "/Users/karo/Desktop/code/studia-sem5/wyspaGier/WyspaGier/WyspaGier.csproj",
       "projectName": "WyspaGier",
-      "projectPath": "/Users/karo/Desktop/code/studia-sem5/projektcplotek+wzorce/WyspaGier/WyspaGier.csproj",
+      "projectPath": "/Users/karo/Desktop/code/studia-sem5/wyspaGier/WyspaGier/WyspaGier.csproj",
       "packagesPath": "/Users/karo/.nuget/packages/",
-      "outputPath": "/Users/karo/Desktop/code/studia-sem5/projektcplotek+wzorce/WyspaGier/obj/",
+      "outputPath": "/Users/karo/Desktop/code/studia-sem5/wyspaGier/WyspaGier/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/Users/karo/.nuget/NuGet/NuGet.Config"

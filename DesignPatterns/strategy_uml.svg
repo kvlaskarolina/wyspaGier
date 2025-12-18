@@ -1,0 +1,104 @@
+<svg width="800" height="500" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Marker: Empty Triangle (Inheritance/Implementation) -->
+    <marker id="arrow-implementation" markerWidth="14" markerHeight="14" refX="14" refY="7" orient="auto">
+      <path d="M0,0 L14,7 L0,14 L0,0" style="fill:white; stroke:#333; stroke-width:1.5;" />
+    </marker>
+    
+    <!-- Marker: Open Arrow (Association) -->
+    <marker id="arrow-association" markerWidth="12" markerHeight="12" refX="12" refY="6" orient="auto">
+      <path d="M0,0 L12,6 L0,12" style="fill:none; stroke:#333; stroke-width:1.5;" />
+    </marker>
+
+    <!-- Marker: Diamond (Aggregation) -->
+    <marker id="arrow-aggregation" markerWidth="16" markerHeight="10" refX="1" refY="5" orient="auto">
+      <path d="M0,5 L8,10 L16,5 L8,0 L0,5" style="fill:white; stroke:#333; stroke-width:1.5;" />
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="100%" height="100%" fill="white" />
+
+  <!-- ======================================================= -->
+  <!-- INTERFACE: IDifficultyStrategy (Top Center) -->
+  <!-- Stylized like 'IGame' in your example -->
+  <!-- ======================================================= -->
+  <g transform="translate(420, 50)">
+    <!-- Box with blueish background header -->
+    <rect x="0" y="0" width="240" height="90" rx="6" ry="6" style="fill:#F0F8FF; stroke:#333; stroke-width:2" />
+    <line x1="0" y1="40" x2="240" y2="40" style="stroke:#333; stroke-width:1" />
+    
+    <!-- Text -->
+    <text x="120" y="20" font-family="Arial, sans-serif" font-size="11" font-style="italic" fill="#555" text-anchor="middle">&lt;&lt;interface&gt;&gt;</text>
+    <text x="120" y="35" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#000" text-anchor="middle">IDifficultyStrategy</text>
+    
+    <!-- Methods -->
+    <text x="10" y="60" font-family="Arial, sans-serif" font-size="12" fill="#000">+ CalculateNextMove(...)</text>
+  </g>
+
+  <!-- ======================================================= -->
+  <!-- CONTEXT: TicTacToeGame (Left Side) -->
+  <!-- Stylized like 'GameFactory' in your example -->
+  <!-- ======================================================= -->
+  <g transform="translate(50, 150)">
+    <rect x="0" y="0" width="280" height="100" rx="6" ry="6" style="fill:white; stroke:#333; stroke-width:2" />
+    <line x1="0" y1="35" x2="280" y2="35" style="stroke:#333; stroke-width:1" />
+    <line x1="0" y1="65" x2="280" y2="65" style="stroke:#333; stroke-width:1" />
+
+    <!-- Text -->
+    <text x="140" y="25" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#000" text-anchor="middle">TicTacToeGame</text>
+    
+    <!-- Fields -->
+    <text x="10" y="52" font-family="Arial, sans-serif" font-size="11" fill="#000">- _aiStrategy : IDifficultyStrategy</text>
+    
+    <!-- Methods -->
+    <text x="10" y="85" font-family="Arial, sans-serif" font-size="12" fill="#000">+ SetDifficulty(strategy)</text>
+  </g>
+
+  <!-- ======================================================= -->
+  <!-- CONCRETE STRATEGIES (Bottom) -->
+  <!-- Stylized like the game classes in your example -->
+  <!-- ======================================================= -->
+  
+  <!-- EasyAI -->
+  <g transform="translate(300, 300)">
+    <rect x="0" y="0" width="140" height="60" rx="6" ry="6" style="fill:white; stroke:#333; stroke-width:2" />
+    <line x1="0" y1="30" x2="140" y2="30" style="stroke:#333; stroke-width:1" />
+    <text x="70" y="20" font-family="Arial, sans-serif" font-size="13" font-weight="bold" fill="#000" text-anchor="middle">EasyAI</text>
+    <text x="10" y="50" font-family="Arial, sans-serif" font-size="11" fill="#000">+ Calculate...</text>
+  </g>
+
+  <!-- MediumAI -->
+  <g transform="translate(470, 300)">
+    <rect x="0" y="0" width="140" height="60" rx="6" ry="6" style="fill:white; stroke:#333; stroke-width:2" />
+    <line x1="0" y1="30" x2="140" y2="30" style="stroke:#333; stroke-width:1" />
+    <text x="70" y="20" font-family="Arial, sans-serif" font-size="13" font-weight="bold" fill="#000" text-anchor="middle">MediumAI</text>
+    <text x="10" y="50" font-family="Arial, sans-serif" font-size="11" fill="#000">+ Calculate...</text>
+  </g>
+
+  <!-- HardAI -->
+  <g transform="translate(640, 300)">
+    <rect x="0" y="0" width="140" height="60" rx="6" ry="6" style="fill:white; stroke:#333; stroke-width:2" />
+    <line x1="0" y1="30" x2="140" y2="30" style="stroke:#333; stroke-width:1" />
+    <text x="70" y="20" font-family="Arial, sans-serif" font-size="13" font-weight="bold" fill="#000" text-anchor="middle">HardAI</text>
+    <text x="10" y="50" font-family="Arial, sans-serif" font-size="11" fill="#000">+ Calculate...</text>
+  </g>
+
+  <!-- ======================================================= -->
+  <!-- CONNECTIONS -->
+  <!-- ======================================================= -->
+
+  <!-- Aggregation: TicTacToeGame <>-> IDifficultyStrategy -->
+  <!-- Using diamond on Context side to show it "has a" strategy -->
+  <path d="M330,200 L375,200 L375,95 L420,95" style="fill:none; stroke:#333; stroke-width:2; marker-start:url(#arrow-aggregation)" />
+  
+  <!-- Implementation: EasyAI -> IDifficultyStrategy -->
+  <path d="M370,300 L370,250 L540,250 L540,140" style="fill:none; stroke:#333; stroke-width:1.5; stroke-dasharray:6,4; marker-end:url(#arrow-implementation)" />
+  
+  <!-- Implementation: MediumAI -> IDifficultyStrategy -->
+  <path d="M540,300 L540,140" style="fill:none; stroke:#333; stroke-width:1.5; stroke-dasharray:6,4; marker-end:url(#arrow-implementation)" />
+
+  <!-- Implementation: HardAI -> IDifficultyStrategy -->
+  <path d="M710,300 L710,250 L540,250 L540,140" style="fill:none; stroke:#333; stroke-width:1.5; stroke-dasharray:6,4; marker-end:url(#arrow-implementation)" />
+
+</svg>

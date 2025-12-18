@@ -1,0 +1,105 @@
+<svg width="850" height="500" xmlns="http://www.w3.org/2000/svg">
+  <!-- Definicje grotów strzałek -->
+  <defs>
+    <!-- Pusty romb (Agregacja) -->
+    <marker id="diamond" markerWidth="24" markerHeight="12" refX="0" refY="6" orient="auto">
+      <path d="M0,6 L12,0 L24,6 L12,12 z" fill="white" stroke="black" stroke-width="2"/>
+    </marker>
+    
+    <!-- Pusty trójkąt (Implementacja) - skierowany w górę -->
+    <marker id="triangle" markerWidth="20" markerHeight="20" refX="10" refY="0">
+      <path d="M0,20 L10,0 L20,20 z" fill="white" stroke="black" stroke-width="2"/>
+    </marker>
+  </defs>
+
+  <!-- Styl ogólny -->
+  <style>
+    text { font-family: Arial, sans-serif; }
+    .title { font-weight: bold; font-size: 14px; text-anchor: middle; }
+    .subtitle { font-style: italic; font-size: 12px; text-anchor: middle; }
+    .member { font-size: 12px; text-anchor: start; }
+    .box { fill: white; stroke: black; stroke-width: 2; rx: 8; ry: 8; }
+    .line { stroke: black; stroke-width: 2; fill: none; }
+    .dashed { stroke-dasharray: 8,6; }
+  </style>
+
+  <!-- === KLASA CONTEXT (GameStateManager) === -->
+  <g transform="translate(20, 100)">
+    <rect width="280" height="110" class="box" />
+    <text x="140" y="25" class="title">GameStateManager</text>
+    <line x1="0" y1="35" x2="280" y2="35" class="line" stroke-width="1"/>
+    
+    <!-- Pola -->
+    <text x="10" y="55" class="member">- _currentState : IGameState</text>
+    <line x1="0" y1="65" x2="280" y2="65" class="line" stroke-width="1"/>
+    
+    <!-- Metody -->
+    <text x="10" y="85" class="member">+ ChangeState(newState)</text>
+  </g>
+
+  <!-- === INTERFEJS (IGameState) === -->
+  <g transform="translate(450, 20)">
+    <rect width="240" height="110" class="box" />
+    <text x="120" y="25" class="subtitle">&lt;&lt;interface&gt;&gt;</text>
+    <text x="120" y="45" class="title">IGameState</text>
+    <line x1="0" y1="55" x2="240" y2="55" class="line" stroke-width="1"/>
+    
+    <text x="10" y="75" class="member">+ Enter()</text>
+    <text x="10" y="90" class="member">+ Update()</text>
+    <text x="10" y="105" class="member">+ Exit()</text>
+  </g>
+
+  <!-- === KLASY KONKRETNE (Dół) === -->
+  
+  <!-- MenuState -->
+  <g transform="translate(100, 350)">
+    <rect width="120" height="60" class="box" />
+    <text x="60" y="25" class="title">MenuState</text>
+    <line x1="0" y1="35" x2="120" y2="35" class="line" stroke-width="1"/>
+    <text x="10" y="50" class="member" font-size="10">+ Enter()...</text>
+  </g>
+
+  <!-- PlayingState -->
+  <g transform="translate(260, 350)">
+    <rect width="120" height="60" class="box" />
+    <text x="60" y="25" class="title">PlayingState</text>
+    <line x1="0" y1="35" x2="120" y2="35" class="line" stroke-width="1"/>
+    <text x="10" y="50" class="member" font-size="10">+ Enter()...</text>
+  </g>
+
+  <!-- PausedState -->
+  <g transform="translate(420, 350)">
+    <rect width="120" height="60" class="box" />
+    <text x="60" y="25" class="title">PausedState</text>
+    <line x1="0" y1="35" x2="120" y2="35" class="line" stroke-width="1"/>
+    <text x="10" y="50" class="member" font-size="10">+ Enter()...</text>
+  </g>
+
+   <!-- GameOverState -->
+  <g transform="translate(580, 350)">
+    <rect width="120" height="60" class="box" />
+    <text x="60" y="25" class="title">GameOverState</text>
+    <line x1="0" y1="35" x2="120" y2="35" class="line" stroke-width="1"/>
+    <text x="10" y="50" class="member" font-size="10">+ Enter()...</text>
+  </g>
+
+  <!-- === RELACJE === -->
+
+  <!-- Agregacja (Manager -> IGameState) -->
+  <!-- Romb przy Managerze, linia ciągła do Interfejsu -->
+  <path d="M 300 155 L 375 155 L 375 75 L 450 75" class="line" marker-start="url(#diamond)" />
+
+  <!-- Implementacja (Klasy dolne -> IGameState) -->
+  <!-- Główna linia pionowa ze strzałką (trójkątem) -->
+  <line x1="570" y1="130" x2="570" y2="300" class="line dashed" marker-start="url(#triangle)" />
+  
+  <!-- Linia pozioma łącząca wszystkie stany -->
+  <line x1="160" y1="300" x2="640" y2="300" class="line dashed" />
+  
+  <!-- Odnogi do poszczególnych klas -->
+  <line x1="160" y1="300" x2="160" y2="350" class="line dashed" /> <!-- Menu -->
+  <line x1="320" y1="300" x2="320" y2="350" class="line dashed" /> <!-- Playing -->
+  <line x1="480" y1="300" x2="480" y2="350" class="line dashed" /> <!-- Paused -->
+  <line x1="640" y1="300" x2="640" y2="350" class="line dashed" /> <!-- GameOver -->
+
+</svg>

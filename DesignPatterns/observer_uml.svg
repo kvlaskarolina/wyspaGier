@@ -1,0 +1,89 @@
+<svg width="800" height="450" xmlns="http://www.w3.org/2000/svg">
+  <!-- Definicje grotów strzałek -->
+  <defs>
+    <!-- Pusty romb (Agregacja) - bez zmian -->
+    <marker id="diamond" markerWidth="24" markerHeight="12" refX="0" refY="6" orient="auto">
+      <path d="M0,6 L12,0 L24,6 L12,12 z" fill="white" stroke="black" stroke-width="2"/>
+    </marker>
+    
+    <!-- Pusty trójkąt (Dziedziczenie/Implementacja) - POPRAWIONY -->
+    <!-- Usunięto orient="auto", zmieniono refY na 0 (czubek) -->
+    <marker id="triangle" markerWidth="20" markerHeight="20" refX="10" refY="0">
+      <path d="M0,20 L10,0 L20,20 z" fill="white" stroke="black" stroke-width="2"/>
+    </marker>
+  </defs>
+
+  <!-- Styl ogólny -->
+  <style>
+    text { font-family: Arial, sans-serif; }
+    .title { font-weight: bold; font-size: 14px; text-anchor: middle; }
+    .subtitle { font-style: italic; font-size: 12px; text-anchor: middle; }
+    .member { font-size: 12px; text-anchor: start; }
+    .box { fill: white; stroke: black; stroke-width: 2; rx: 8; ry: 8; }
+    .line { stroke: black; stroke-width: 2; fill: none; }
+    .dashed { stroke-dasharray: 8,6; }
+  </style>
+
+  <!-- === KLASA GAME (Po lewej) === -->
+  <g transform="translate(20, 100)">
+    <rect width="280" height="130" class="box" />
+    <text x="140" y="25" class="title">Game</text>
+    <line x1="0" y1="35" x2="280" y2="35" class="line" stroke-width="1"/>
+    <text x="10" y="55" class="member">- _observers : List&lt;IGameObserver&gt;</text>
+    <line x1="0" y1="65" x2="280" y2="65" class="line" stroke-width="1"/>
+    <text x="10" y="85" class="member">+ Attach(observer : IGameObserver)</text>
+    <text x="10" y="105" class="member"># NotifyScoreChanged(score : int)</text>
+  </g>
+
+  <!-- === INTERFEJS (Prawa góra) === -->
+  <g transform="translate(420, 20)">
+    <rect width="280" height="100" class="box" />
+    <text x="140" y="25" class="subtitle">&lt;&lt;interface&gt;&gt;</text>
+    <text x="140" y="45" class="title">IGameObserver</text>
+    <line x1="0" y1="55" x2="280" y2="55" class="line" stroke-width="1"/>
+    <text x="10" y="75" class="member">+ OnScoreChanged(newScore)</text>
+    <text x="10" y="90" class="member">+ OnGameOver(result)</text>
+  </g>
+
+  <!-- === KLASY KONKRETNE (Dół) === -->
+  
+  <!-- ScoreDisplay -->
+  <g transform="translate(320, 300)">
+    <rect width="140" height="60" class="box" />
+    <text x="70" y="25" class="title">ScoreDisplay</text>
+    <line x1="0" y1="35" x2="140" y2="35" class="line" stroke-width="1"/>
+    <text x="10" y="50" class="member" font-size="10">+ OnScoreChanged...</text>
+  </g>
+
+  <!-- AchievementSystem -->
+  <g transform="translate(480, 300)">
+    <rect width="140" height="60" class="box" />
+    <text x="70" y="25" class="title">AchievementSystem</text>
+    <line x1="0" y1="35" x2="140" y2="35" class="line" stroke-width="1"/>
+    <text x="10" y="50" class="member" font-size="10">+ OnScoreChanged...</text>
+  </g>
+
+  <!-- StatisticsTracker -->
+  <g transform="translate(640, 300)">
+    <rect width="140" height="60" class="box" />
+    <text x="70" y="25" class="title">StatisticsTracker</text>
+    <line x1="0" y1="35" x2="140" y2="35" class="line" stroke-width="1"/>
+    <text x="10" y="50" class="member" font-size="10">+ OnScoreChanged...</text>
+  </g>
+
+  <!-- === RELACJE === -->
+
+  <!-- Agregacja (Game -> IGameObserver) -->
+  <path d="M 300 165 L 360 165 L 360 70 L 420 70" class="line" marker-start="url(#diamond)" />
+
+  <!-- Implementacja (Klasy dolne -> IGameObserver) -->
+  <!-- Główna linia pionowa ze strzałką -->
+  <line x1="560" y1="120" x2="560" y2="280" class="line dashed" marker-start="url(#triangle)" />
+  
+  <!-- Linia pozioma i odnogi -->
+  <line x1="390" y1="280" x2="710" y2="280" class="line dashed" />
+  <line x1="390" y1="280" x2="390" y2="300" class="line dashed" />
+  <line x1="550" y1="280" x2="550" y2="300" class="line dashed" />
+  <line x1="710" y1="280" x2="710" y2="300" class="line dashed" />
+
+</svg>

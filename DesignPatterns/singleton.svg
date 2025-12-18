@@ -1,0 +1,74 @@
+<svg width="850" height="450" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Romb (Agregacja) - ZMNIEJSZONY -->
+    <!-- Wymiary: 16 szerokości, 10 wysokości -->
+    <marker id="diamond" markerWidth="16" markerHeight="10" refX="15" refY="5" orient="auto-start-reverse">
+      <path d="M0,5 L8,0 L16,5 L8,10 z" fill="white" stroke="black" stroke-width="2"/>
+    </marker>
+    
+    <!-- Strzałka zwykła (dla Settings) - ZMNIEJSZONA -->
+    <!-- Wymiary: 10 szerokości, 10 wysokości -->
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="10" refY="5" orient="auto">
+      <path d="M0,0 L10,5 L0,10" fill="none" stroke="black" stroke-width="2"/>
+    </marker>
+  </defs>
+
+  <rect width="100%" height="100%" fill="#fafafa"/>
+
+  <!-- ========================================== -->
+  <!-- KLASA: GameManager (Po lewej) -->
+  <!-- ========================================== -->
+  <g transform="translate(50, 120)">
+    <!-- Obramowanie -->
+    <rect x="0" y="0" width="380" height="180" fill="white" stroke="black" stroke-width="3"/>
+    
+    <!-- Linie podziału -->
+    <line x1="0" y1="45" x2="380" y2="45" stroke="black" stroke-width="2"/>
+    <line x1="0" y1="125" x2="380" y2="125" stroke="black" stroke-width="2"/>
+
+    <!-- Tytuł -->
+    <text x="190" y="32" font-family="Arial, Helvetica, sans-serif" font-weight="bold" font-size="18" text-anchor="middle">GameManager</text>
+
+    <!-- Pola (Fields) -->
+    <text x="15" y="70" font-family="Arial, Helvetica, sans-serif" font-size="14" text-decoration="underline">- _instance : GameManager</text>
+    <text x="15" y="90" font-family="Arial, Helvetica, sans-serif" font-size="14" text-decoration="underline">- _lock : object</text>
+    <text x="15" y="110" font-family="Arial, Helvetica, sans-serif" font-size="14">+ CurrentGame : IGame</text>
+
+    <!-- Metody (Methods) -->
+    <text x="15" y="150" font-family="Arial, Helvetica, sans-serif" font-size="14" text-decoration="underline">+ Instance : GameManager { get }</text>
+    <text x="15" y="170" font-family="Arial, Helvetica, sans-serif" font-size="14">- GameManager()</text>
+  </g>
+
+  <!-- ========================================== -->
+  <!-- INTERFEJS: IGame (Po prawej, góra) -->
+  <!-- ========================================== -->
+  <g transform="translate(550, 50)">
+    <rect x="0" y="0" width="220" height="70" fill="white" stroke="black" stroke-width="3"/>
+    
+    <text x="110" y="28" font-family="Arial, Helvetica, sans-serif" font-style="italic" font-size="14" text-anchor="middle">&lt;&lt;interface&gt;&gt;</text>
+    <text x="110" y="55" font-family="Arial, Helvetica, sans-serif" font-weight="bold" font-size="18" text-anchor="middle">IGame</text>
+  </g>
+
+  <!-- ========================================== -->
+  <!-- KLASA: GameSettings (Po prawej, dół) -->
+  <!-- ========================================== -->
+  <g transform="translate(550, 250)">
+    <rect x="0" y="0" width="220" height="60" fill="white" stroke="black" stroke-width="3"/>
+    <text x="110" y="38" font-family="Arial, Helvetica, sans-serif" font-weight="bold" font-size="18" text-anchor="middle">GameSettings</text>
+  </g>
+
+  <!-- ========================================== -->
+  <!-- LINIE ŁĄCZĄCE -->
+  <!-- ========================================== -->
+
+  <!-- 1. Relacja GameManager -> IGame -->
+  <!-- POJEDYNCZA LINIA wychodząca ze środka boku GameManager -->
+  <path d="M430,210 L500,210 L500,85 L550,85" fill="none" stroke="black" stroke-width="3" marker-start="url(#diamond)"/>
+
+  <!-- 2. Relacja GameManager -> GameSettings -->
+  <path d="M430,250 L500,250 L500,280 L550,280" fill="none" stroke="black" stroke-width="3" marker-end="url(#arrow)"/>
+  
+  <!-- Etykieta asocjacji -->
+  <text x="440" y="245" font-family="Arial, sans-serif" font-size="12">+ Settings</text>
+
+</svg>

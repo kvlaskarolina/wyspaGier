@@ -1,0 +1,91 @@
+<svg width="800" height="500" xmlns="http://www.w3.org/2000/svg">
+  <!-- Definicje grotów strzałek -->
+  <defs>
+    <!-- Pusty romb (Agregacja) -->
+    <marker id="diamond" markerWidth="24" markerHeight="12" refX="0" refY="6" orient="auto">
+      <path d="M0,6 L12,0 L24,6 L12,12 z" fill="white" stroke="black" stroke-width="2"/>
+    </marker>
+    
+    <!-- Pusty trójkąt (Implementacja) - skierowany w górę -->
+    <marker id="triangle" markerWidth="20" markerHeight="20" refX="10" refY="0">
+      <path d="M0,20 L10,0 L20,20 z" fill="white" stroke="black" stroke-width="2"/>
+    </marker>
+
+    <!-- Zwykła strzałka (Asocjacja) -->
+    <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
+      <path d="M0,0 L12,6 L0,12" fill="none" stroke="black" stroke-width="2"/>
+    </marker>
+  </defs>
+
+  <!-- Styl ogólny -->
+  <style>
+    text { font-family: Arial, sans-serif; }
+    .title { font-weight: bold; font-size: 14px; text-anchor: middle; }
+    .subtitle { font-style: italic; font-size: 12px; text-anchor: middle; }
+    .member { font-size: 12px; text-anchor: start; }
+    .box { fill: white; stroke: black; stroke-width: 2; rx: 8; ry: 8; }
+    .line { stroke: black; stroke-width: 2; fill: none; }
+    .dashed { stroke-dasharray: 8,6; }
+  </style>
+
+  <!-- === INVOKER (CommandHistory) === -->
+  <g transform="translate(20, 100)">
+    <rect width="260" height="100" class="box" />
+    <text x="130" y="25" class="title">CommandHistory</text>
+    <line x1="0" y1="35" x2="260" y2="35" class="line" stroke-width="1"/>
+    
+    <text x="10" y="55" class="member">- _history : Stack&lt;ICommand&gt;</text>
+    <line x1="0" y1="65" x2="260" y2="65" class="line" stroke-width="1"/>
+    
+    <text x="10" y="85" class="member">+ ExecuteCommand(cmd)</text>
+    <text x="10" y="100" class="member">+ UndoLast()</text>
+  </g>
+
+  <!-- === INTERFEJS (ICommand) === -->
+  <g transform="translate(380, 20)">
+    <rect width="200" height="80" class="box" />
+    <text x="100" y="25" class="subtitle">&lt;&lt;interface&gt;&gt;</text>
+    <text x="100" y="45" class="title">ICommand</text>
+    <line x1="0" y1="55" x2="200" y2="55" class="line" stroke-width="1"/>
+    
+    <text x="10" y="75" class="member">+ Execute() , Undo()</text>
+  </g>
+
+  <!-- === CONCRETE COMMAND (MoveCommand) === -->
+  <g transform="translate(360, 250)">
+    <rect width="240" height="120" class="box" />
+    <text x="120" y="25" class="title">MoveCommand</text>
+    <line x1="0" y1="35" x2="240" y2="35" class="line" stroke-width="1"/>
+    
+    <text x="10" y="55" class="member">- _game : Game</text>
+    <text x="10" y="70" class="member">- _from : Position</text>
+    <text x="10" y="85" class="member">- _to : Position</text>
+    <line x1="0" y1="95" x2="240" y2="95" class="line" stroke-width="1"/>
+
+    <text x="10" y="115" class="member">+ Execute() , Undo()</text>
+  </g>
+
+  <!-- === RECEIVER (Game) === -->
+  <!-- Dodana klasa Game, bo MoveCommand trzyma jej instancję w polu _game -->
+  <g transform="translate(650, 250)">
+    <rect width="130" height="60" class="box" />
+    <text x="65" y="25" class="title">Game</text>
+    <line x1="0" y1="35" x2="130" y2="35" class="line" stroke-width="1"/>
+    <text x="10" y="55" class="member">+ MovePiece(...)</text>
+  </g>
+
+  <!-- === RELACJE === -->
+
+  <!-- Agregacja (CommandHistory -> ICommand) -->
+  <!-- Romb przy History, linia do ICommand -->
+  <path d="M 280 150 L 330 150 L 330 60 L 380 60" class="line" marker-start="url(#diamond)" />
+
+  <!-- Implementacja (MoveCommand -> ICommand) -->
+  <!-- Strzałka (trójkąt) w górę -->
+  <line x1="480" y1="100" x2="480" y2="250" class="line dashed" marker-start="url(#triangle)" />
+
+  <!-- Asocjacja (MoveCommand -> Game) -->
+  <!-- Zwykła strzałka w prawo, bo MoveCommand "korzysta" z Game -->
+  <line x1="600" y1="310" x2="650" y2="310" class="line" marker-end="url(#arrow)" />
+
+</svg>

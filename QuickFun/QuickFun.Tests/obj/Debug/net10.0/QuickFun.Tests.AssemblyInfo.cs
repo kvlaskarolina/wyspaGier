@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("QuickFun.Tests")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+9c7c9d60e75b157de8dec5a8d37b8d06fbe38e73")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+24127d477aed3103f306a48dc0dca024841570bd")]
 [assembly: System.Reflection.AssemblyProductAttribute("QuickFun.Tests")]
 [assembly: System.Reflection.AssemblyTitleAttribute("QuickFun.Tests")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

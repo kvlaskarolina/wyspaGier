@@ -1,11 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "a423NQ0wjfM=",
+  "dgSpecHash": "vIreR4S5tJU=",
   "success": true,
   "projectFilePath": "/Users/karo/Desktop/code/studia-sem5/wyspaGier/QuickFun/QuickFun.Web/QuickFun.Web.csproj",
   "expectedPackageFiles": [
-    "/Users/karo/.nuget/packages/automapper/16.0.0/automapper.16.0.0.nupkg.sha512",
-    "/Users/karo/.nuget/packages/automapper.extensions.microsoft.dependencyinjection/12.0.1/automapper.extensions.microsoft.dependencyinjection.12.0.1.nupkg.sha512",
+    "/Users/karo/.nuget/packages/automapper/13.0.1/automapper.13.0.1.nupkg.sha512",
     "/Users/karo/.nuget/packages/fluentvalidation/12.1.1/fluentvalidation.12.1.1.nupkg.sha512",
     "/Users/karo/.nuget/packages/mediatr/14.0.0/mediatr.14.0.0.nupkg.sha512",
     "/Users/karo/.nuget/packages/mediatr.contracts/2.0.1/mediatr.contracts.2.0.1.nupkg.sha512",
@@ -61,19 +60,5 @@
     "/Users/karo/.nuget/packages/sqlitepclraw.provider.e_sqlite3/2.1.11/sqlitepclraw.provider.e_sqlite3.2.1.11.nupkg.sha512",
     "/Users/karo/.nuget/packages/microsoft.netcore.app.runtime.mono.browser-wasm/10.0.1/microsoft.netcore.app.runtime.mono.browser-wasm.10.0.1.nupkg.sha512"
   ],
-  "logs": [
-    {
-      "code": "NU1608",
-      "level": "Warning",
-      "message": "Detected package version outside of dependency constraint: AutoMapper.Extensions.Microsoft.DependencyInjection 12.0.1 requires AutoMapper (= 12.0.1) but version AutoMapper 16.0.0 was resolved.",
-      "projectPath": "/Users/karo/Desktop/code/studia-sem5/wyspaGier/QuickFun/QuickFun.Web/QuickFun.Web.csproj",
-      "warningLevel": 1,
-      "filePath": "/Users/karo/Desktop/code/studia-sem5/wyspaGier/QuickFun/QuickFun.Web/QuickFun.Web.csproj",
-      "libraryId": "AutoMapper",
-      "targetGraphs": [
-        "net10.0",
-        "net10.0/browser-wasm"
-      ]
-    }
-  ]
+  "logs": []
 }

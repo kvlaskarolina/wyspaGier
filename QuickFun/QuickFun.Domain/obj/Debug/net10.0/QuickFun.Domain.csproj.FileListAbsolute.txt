@@ -1,0 +1,12 @@
+/Users/karo/Desktop/code/studia-sem5/wyspaGier/QuickFun/QuickFun.Domain/bin/Debug/net10.0/QuickFun.Domain.deps.json
+/Users/karo/Desktop/code/studia-sem5/wyspaGier/QuickFun/QuickFun.Domain/bin/Debug/net10.0/QuickFun.Domain.dll
+/Users/karo/Desktop/code/studia-sem5/wyspaGier/QuickFun/QuickFun.Domain/bin/Debug/net10.0/QuickFun.Domain.pdb
+/Users/karo/Desktop/code/studia-sem5/wyspaGier/QuickFun/QuickFun.Domain/obj/Debug/net10.0/QuickFun.Domain.GeneratedMSBuildEditorConfig.editorconfig
+/Users/karo/Desktop/code/studia-sem5/wyspaGier/QuickFun/QuickFun.Domain/obj/Debug/net10.0/QuickFun.Domain.AssemblyInfoInputs.cache
+/Users/karo/Desktop/code/studia-sem5/wyspaGier/QuickFun/QuickFun.Domain/obj/Debug/net10.0/QuickFun.Domain.AssemblyInfo.cs
+/Users/karo/Desktop/code/studia-sem5/wyspaGier/QuickFun/QuickFun.Domain/obj/Debug/net10.0/QuickFun.Domain.csproj.CoreCompileInputs.cache
+/Users/karo/Desktop/code/studia-sem5/wyspaGier/QuickFun/QuickFun.Domain/obj/Debug/net10.0/QuickFun.Domain.sourcelink.json
+/Users/karo/Desktop/code/studia-sem5/wyspaGier/QuickFun/QuickFun.Domain/obj/Debug/net10.0/QuickFun.Domain.dll
+/Users/karo/Desktop/code/studia-sem5/wyspaGier/QuickFun/QuickFun.Domain/obj/Debug/net10.0/refint/QuickFun.Domain.dll
+/Users/karo/Desktop/code/studia-sem5/wyspaGier/QuickFun/QuickFun.Domain/obj/Debug/net10.0/QuickFun.Domain.pdb
+/Users/karo/Desktop/code/studia-sem5/wyspaGier/QuickFun/QuickFun.Domain/obj/Debug/net10.0/ref/QuickFun.Domain.dll

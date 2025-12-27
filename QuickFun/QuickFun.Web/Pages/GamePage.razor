@@ -1,39 +1,108 @@
 @page "/game/{GameTypeString}"
 @using QuickFun.Domain.Enums
 @using QuickFun.Games
+@using QuickFun.Games.Engines
+@using QuickFun.Application.Interfaces
 @inject IGameFactory GameFactory
+@inject IGameSessionService SessionService
 
-<h3>Grasz w: @CurrentGame?.Name</h3>
+<div class="game-layout">
+    @if (CurrentGame == null)
+    {
+        <p>Ładowanie gry...</p>
+    }
+    else
+    {
+        <h1>@CurrentGame.Name</h1>
 
-@if (CurrentGame is QuickFun.Games.Engines.TicTacToeEngine ttt)
-{
-    <p>Tu wyświetlam planszę do Kółka i Krzyżyk...</p>
-}
-else if (CurrentGame is QuickFun.Games.Engines.SnakeEngine snake)
-{
-    <p>Tu wyświetlam planszę do Węża...</p>
-}
+        @* SEKCJA DYNAMICZNA: Tutaj sprawdzamy, co wyprodukowała fabryka *@
 
-<button @onclick="ResetGame">Resetuj grę</button>
+        @if (CurrentGame is TicTacToeEngine ttt)
+        {
+            <div class="status">@ttt.Message</div>
+            <div class="ttt-board">
+                @for (int i = 0; i < 9; i++)
+                {
+                    int index = i;
+                    <button class="cell" @onclick="() => HandleTicTacToeMove(ttt, index)" disabled="@ttt.IsGameOver">
+                        @ttt.Board[i]
+                    </button>
+                }
+            </div>
+        }
+        else if (CurrentGame is SnakeEngine snake)
+        {
+            @* Tutaj w przyszłości dodasz widok Snake'a *@
+            <div class="snake-placeholder">
+                Gra Snake w budowie! Twój wynik: @snake.Score
+            </div>
+        }
+
+        <div class="controls">
+            <button class="btn" @onclick="Reset">Restart</button>
+            <a href="/" class="btn btn-secondary">Powrót do menu</a>
+        </div>
+    }
+</div>
 
 @code {
-    [Parameter]
-    public string GameTypeString { get; set; }
+    [Parameter] public string GameTypeString { get; set; }
+    private IGameEngine CurrentGame { get; set; }
 
-    public IGameEngine CurrentGame { get; set; }
-
+    // Ta metoda wykonuje się, gdy wejdziesz na stronę lub zmienisz parametr w URL
     protected override void OnParametersSet()
     {
-        // Parsujemy string z URL na Enum
         if (Enum.TryParse<GameType>(GameTypeString, true, out var type))
         {
-            // UŻYCIE FABRYKI:
+            // FABRYKA: Tworzy odpowiedni silnik na podstawie parametru z URL
             CurrentGame = GameFactory.CreateGame(type);
         }
     }
 
-    void ResetGame()
+    private async Task HandleTicTacToeMove(TicTacToeEngine engine, int index)
     {
-        CurrentGame?.Reset();
+        engine.MakeMove(index);
+
     }
+
+    private void Reset() => CurrentGame?.Reset();
 }
+
+<style>
+    .game-layout {
+        text-align: center;
+        max-width: 500px;
+        margin: 2rem auto;
+    }
+
+    .ttt-board {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
+        margin: 1rem 0;
+    }
+
+    .cell {
+        height: 100px;
+        font-size: 2rem;
+        background: white;
+        border: 2px solid #333;
+        border-radius: 8px;
+    }
+
+    .btn {
+        padding: 10px 20px;
+        cursor: pointer;
+        background: #28a745;
+        color: white;
+        border: none;
+        border-radius: 5px;
+    }
+
+    .btn-secondary {
+        background: #6c757d;
+        text-decoration: none;
+        margin-left: 10px;
+        display: inline-block;
+    }
+</style>

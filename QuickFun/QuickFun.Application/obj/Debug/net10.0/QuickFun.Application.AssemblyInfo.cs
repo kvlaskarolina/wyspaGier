@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("QuickFun.Application")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+15104c0a70a015563453ec1aad97732a77e469ff")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+af2e89e7d3ab65d9f9629a61897b8d863b08c3a6")]
 [assembly: System.Reflection.AssemblyProductAttribute("QuickFun.Application")]
 [assembly: System.Reflection.AssemblyTitleAttribute("QuickFun.Application")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

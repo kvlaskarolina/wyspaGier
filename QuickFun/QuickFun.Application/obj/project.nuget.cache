@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "FGUP5fuBU5g=",
+  "dgSpecHash": "PL0gcaIMzxg=",
   "success": true,
-  "projectFilePath": "/Users/karo/Desktop/code/studia-sem5/wyspaGier/QuickFun/QuickFun.Application/QuickFun.Application.csproj",
+  "projectFilePath": "/Users/karo/Desktop/wyspaGier/QuickFun/QuickFun.Application/QuickFun.Application.csproj",
   "expectedPackageFiles": [
     "/Users/karo/.nuget/packages/automapper/16.0.0/automapper.16.0.0.nupkg.sha512",
     "/Users/karo/.nuget/packages/automapper.extensions.microsoft.dependencyinjection/12.0.1/automapper.extensions.microsoft.dependencyinjection.12.0.1.nupkg.sha512",
@@ -23,9 +23,9 @@
       "code": "NU1608",
       "level": "Warning",
       "message": "Detected package version outside of dependency constraint: AutoMapper.Extensions.Microsoft.DependencyInjection 12.0.1 requires AutoMapper (= 12.0.1) but version AutoMapper 16.0.0 was resolved.",
-      "projectPath": "/Users/karo/Desktop/code/studia-sem5/wyspaGier/QuickFun/QuickFun.Application/QuickFun.Application.csproj",
+      "projectPath": "/Users/karo/Desktop/wyspaGier/QuickFun/QuickFun.Application/QuickFun.Application.csproj",
       "warningLevel": 1,
-      "filePath": "/Users/karo/Desktop/code/studia-sem5/wyspaGier/QuickFun/QuickFun.Application/QuickFun.Application.csproj",
+      "filePath": "/Users/karo/Desktop/wyspaGier/QuickFun/QuickFun.Application/QuickFun.Application.csproj",
       "libraryId": "AutoMapper",
       "targetGraphs": [
         "net10.0"

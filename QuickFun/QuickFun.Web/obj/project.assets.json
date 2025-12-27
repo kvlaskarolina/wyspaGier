@@ -33,6 +33,18 @@
           "lib/netstandard2.1/AutoMapper.Extensions.Microsoft.DependencyInjection.dll": {}
         }
       },
+      "Blazored.LocalStorage/4.3.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNetCore.Components.Web": "7.0.0"
+        },
+        "compile": {
+          "lib/net7.0/Blazored.LocalStorage.dll": {}
+        },
+        "runtime": {
+          "lib/net7.0/Blazored.LocalStorage.dll": {}
+        }
+      },
       "FluentValidation/12.1.1": {
         "type": "package",
         "compile": {
@@ -1035,6 +1047,7 @@
         "type": "project",
         "framework": ".NETCoreApp,Version=v10.0",
         "dependencies": {
+          "Blazored.LocalStorage": "4.3.0",
           "Microsoft.EntityFrameworkCore": "10.0.1",
           "Microsoft.EntityFrameworkCore.Sqlite": "10.0.1",
           "QuickFun.Application": "1.0.0",
@@ -1078,6 +1091,18 @@
         },
         "runtime": {
           "lib/netstandard2.1/AutoMapper.Extensions.Microsoft.DependencyInjection.dll": {}
+        }
+      },
+      "Blazored.LocalStorage/4.3.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNetCore.Components.Web": "7.0.0"
+        },
+        "compile": {
+          "lib/net7.0/Blazored.LocalStorage.dll": {}
+        },
+        "runtime": {
+          "lib/net7.0/Blazored.LocalStorage.dll": {}
         }
       },
       "FluentValidation/12.1.1": {
@@ -1991,6 +2016,7 @@
         "type": "project",
         "framework": ".NETCoreApp,Version=v10.0",
         "dependencies": {
+          "Blazored.LocalStorage": "4.3.0",
           "Microsoft.EntityFrameworkCore": "10.0.1",
           "Microsoft.EntityFrameworkCore.Sqlite": "10.0.1",
           "QuickFun.Application": "1.0.0",
@@ -2042,6 +2068,20 @@
         "automapper.extensions.microsoft.dependencyinjection.nuspec",
         "icon.png",
         "lib/netstandard2.1/AutoMapper.Extensions.Microsoft.DependencyInjection.dll"
+      ]
+    },
+    "Blazored.LocalStorage/4.3.0": {
+      "sha512": "CfHp9SWN45cM/TM8uw4pELQBfCRtMssCMSOjsEXVWibeYBn36TLpzw+J1vsC2Su2BEQ3Et19A5+GqK1S3kHbTQ==",
+      "type": "package",
+      "path": "blazored.localstorage/4.3.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "blazored.localstorage.4.3.0.nupkg.sha512",
+        "blazored.localstorage.nuspec",
+        "icon.png",
+        "lib/net6.0/Blazored.LocalStorage.dll",
+        "lib/net7.0/Blazored.LocalStorage.dll"
       ]
     },
     "FluentValidation/12.1.1": {
@@ -3540,6 +3580,7 @@
   },
   "projectFileDependencyGroups": {
     "net10.0": [
+      "Blazored.LocalStorage >= 4.3.0",
       "Microsoft.AspNetCore.App.Internal.Assets >= 10.0.1",
       "Microsoft.AspNetCore.Components.WebAssembly >= 10.0.1",
       "Microsoft.AspNetCore.Components.WebAssembly.DevServer >= 10.0.1",
@@ -3557,11 +3598,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/karo/Desktop/code/studia-sem5/wyspaGier/QuickFun/QuickFun.Web/QuickFun.Web.csproj",
+      "projectUniqueName": "/Users/karo/Desktop/wyspaGier/QuickFun/QuickFun.Web/QuickFun.Web.csproj",
       "projectName": "QuickFun.Web",
-      "projectPath": "/Users/karo/Desktop/code/studia-sem5/wyspaGier/QuickFun/QuickFun.Web/QuickFun.Web.csproj",
+      "projectPath": "/Users/karo/Desktop/wyspaGier/QuickFun/QuickFun.Web/QuickFun.Web.csproj",
       "packagesPath": "/Users/karo/.nuget/packages/",
-      "outputPath": "/Users/karo/Desktop/code/studia-sem5/wyspaGier/QuickFun/QuickFun.Web/obj/",
+      "outputPath": "/Users/karo/Desktop/wyspaGier/QuickFun/QuickFun.Web/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/Users/karo/.nuget/NuGet/NuGet.Config"
@@ -3576,14 +3617,14 @@
         "net10.0": {
           "targetAlias": "net10.0",
           "projectReferences": {
-            "/Users/karo/Desktop/code/studia-sem5/wyspaGier/QuickFun/QuickFun.Application/QuickFun.Application.csproj": {
-              "projectPath": "/Users/karo/Desktop/code/studia-sem5/wyspaGier/QuickFun/QuickFun.Application/QuickFun.Application.csproj"
+            "/Users/karo/Desktop/wyspaGier/QuickFun/QuickFun.Application/QuickFun.Application.csproj": {
+              "projectPath": "/Users/karo/Desktop/wyspaGier/QuickFun/QuickFun.Application/QuickFun.Application.csproj"
             },
-            "/Users/karo/Desktop/code/studia-sem5/wyspaGier/QuickFun/QuickFun.Games/QuickFun.Games.csproj": {
-              "projectPath": "/Users/karo/Desktop/code/studia-sem5/wyspaGier/QuickFun/QuickFun.Games/QuickFun.Games.csproj"
+            "/Users/karo/Desktop/wyspaGier/QuickFun/QuickFun.Games/QuickFun.Games.csproj": {
+              "projectPath": "/Users/karo/Desktop/wyspaGier/QuickFun/QuickFun.Games/QuickFun.Games.csproj"
             },
-            "/Users/karo/Desktop/code/studia-sem5/wyspaGier/QuickFun/QuickFun.Infrastructure/QuickFun.Infrastructure.csproj": {
-              "projectPath": "/Users/karo/Desktop/code/studia-sem5/wyspaGier/QuickFun/QuickFun.Infrastructure/QuickFun.Infrastructure.csproj"
+            "/Users/karo/Desktop/wyspaGier/QuickFun/QuickFun.Infrastructure/QuickFun.Infrastructure.csproj": {
+              "projectPath": "/Users/karo/Desktop/wyspaGier/QuickFun/QuickFun.Infrastructure/QuickFun.Infrastructure.csproj"
             }
           }
         }
@@ -3604,6 +3645,10 @@
       "net10.0": {
         "targetAlias": "net10.0",
         "dependencies": {
+          "Blazored.LocalStorage": {
+            "target": "Package",
+            "version": "[4.3.0, )"
+          },
           "Microsoft.AspNetCore.App.Internal.Assets": {
             "suppressParent": "All",
             "target": "Package",

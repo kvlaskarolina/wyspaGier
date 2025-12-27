@@ -1,0 +1,39 @@
+@page "/game/{GameTypeString}"
+@using QuickFun.Domain.Enums
+@using QuickFun.Games
+@inject IGameFactory GameFactory
+
+<h3>Grasz w: @CurrentGame?.Name</h3>
+
+@if (CurrentGame is QuickFun.Games.Engines.TicTacToeEngine ttt)
+{
+    <p>Tu wyświetlam planszę do Kółka i Krzyżyk...</p>
+}
+else if (CurrentGame is QuickFun.Games.Engines.SnakeEngine snake)
+{
+    <p>Tu wyświetlam planszę do Węża...</p>
+}
+
+<button @onclick="ResetGame">Resetuj grę</button>
+
+@code {
+    [Parameter]
+    public string GameTypeString { get; set; }
+
+    public IGameEngine CurrentGame { get; set; }
+
+    protected override void OnParametersSet()
+    {
+        // Parsujemy string z URL na Enum
+        if (Enum.TryParse<GameType>(GameTypeString, true, out var type))
+        {
+            // UŻYCIE FABRYKI:
+            CurrentGame = GameFactory.CreateGame(type);
+        }
+    }
+
+    void ResetGame()
+    {
+        CurrentGame?.Reset();
+    }
+}

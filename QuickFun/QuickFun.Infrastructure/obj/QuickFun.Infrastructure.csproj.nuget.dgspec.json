@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/Users/karo/Desktop/code/studia-sem5/wyspaGier/QuickFun/QuickFun.Infrastructure/QuickFun.Infrastructure.csproj": {}
+    "/Users/karo/Desktop/wyspaGier/QuickFun/QuickFun.Infrastructure/QuickFun.Infrastructure.csproj": {}
   },
   "projects": {
-    "/Users/karo/Desktop/code/studia-sem5/wyspaGier/QuickFun/QuickFun.Application/QuickFun.Application.csproj": {
+    "/Users/karo/Desktop/wyspaGier/QuickFun/QuickFun.Application/QuickFun.Application.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/karo/Desktop/code/studia-sem5/wyspaGier/QuickFun/QuickFun.Application/QuickFun.Application.csproj",
+        "projectUniqueName": "/Users/karo/Desktop/wyspaGier/QuickFun/QuickFun.Application/QuickFun.Application.csproj",
         "projectName": "QuickFun.Application",
-        "projectPath": "/Users/karo/Desktop/code/studia-sem5/wyspaGier/QuickFun/QuickFun.Application/QuickFun.Application.csproj",
+        "projectPath": "/Users/karo/Desktop/wyspaGier/QuickFun/QuickFun.Application/QuickFun.Application.csproj",
         "packagesPath": "/Users/karo/.nuget/packages/",
-        "outputPath": "/Users/karo/Desktop/code/studia-sem5/wyspaGier/QuickFun/QuickFun.Application/obj/",
+        "outputPath": "/Users/karo/Desktop/wyspaGier/QuickFun/QuickFun.Application/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/Users/karo/.nuget/NuGet/NuGet.Config"
@@ -26,8 +26,8 @@
           "net10.0": {
             "targetAlias": "net10.0",
             "projectReferences": {
-              "/Users/karo/Desktop/code/studia-sem5/wyspaGier/QuickFun/QuickFun.Domain/QuickFun.Domain.csproj": {
-                "projectPath": "/Users/karo/Desktop/code/studia-sem5/wyspaGier/QuickFun/QuickFun.Domain/QuickFun.Domain.csproj"
+              "/Users/karo/Desktop/wyspaGier/QuickFun/QuickFun.Domain/QuickFun.Domain.csproj": {
+                "projectPath": "/Users/karo/Desktop/wyspaGier/QuickFun/QuickFun.Domain/QuickFun.Domain.csproj"
               }
             }
           }
@@ -359,14 +359,14 @@
         }
       }
     },
-    "/Users/karo/Desktop/code/studia-sem5/wyspaGier/QuickFun/QuickFun.Domain/QuickFun.Domain.csproj": {
+    "/Users/karo/Desktop/wyspaGier/QuickFun/QuickFun.Domain/QuickFun.Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/karo/Desktop/code/studia-sem5/wyspaGier/QuickFun/QuickFun.Domain/QuickFun.Domain.csproj",
+        "projectUniqueName": "/Users/karo/Desktop/wyspaGier/QuickFun/QuickFun.Domain/QuickFun.Domain.csproj",
         "projectName": "QuickFun.Domain",
-        "projectPath": "/Users/karo/Desktop/code/studia-sem5/wyspaGier/QuickFun/QuickFun.Domain/QuickFun.Domain.csproj",
+        "projectPath": "/Users/karo/Desktop/wyspaGier/QuickFun/QuickFun.Domain/QuickFun.Domain.csproj",
         "packagesPath": "/Users/karo/.nuget/packages/",
-        "outputPath": "/Users/karo/Desktop/code/studia-sem5/wyspaGier/QuickFun/QuickFun.Domain/obj/",
+        "outputPath": "/Users/karo/Desktop/wyspaGier/QuickFun/QuickFun.Domain/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/Users/karo/.nuget/NuGet/NuGet.Config"
@@ -692,14 +692,14 @@
         }
       }
     },
-    "/Users/karo/Desktop/code/studia-sem5/wyspaGier/QuickFun/QuickFun.Infrastructure/QuickFun.Infrastructure.csproj": {
+    "/Users/karo/Desktop/wyspaGier/QuickFun/QuickFun.Infrastructure/QuickFun.Infrastructure.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/karo/Desktop/code/studia-sem5/wyspaGier/QuickFun/QuickFun.Infrastructure/QuickFun.Infrastructure.csproj",
+        "projectUniqueName": "/Users/karo/Desktop/wyspaGier/QuickFun/QuickFun.Infrastructure/QuickFun.Infrastructure.csproj",
         "projectName": "QuickFun.Infrastructure",
-        "projectPath": "/Users/karo/Desktop/code/studia-sem5/wyspaGier/QuickFun/QuickFun.Infrastructure/QuickFun.Infrastructure.csproj",
+        "projectPath": "/Users/karo/Desktop/wyspaGier/QuickFun/QuickFun.Infrastructure/QuickFun.Infrastructure.csproj",
         "packagesPath": "/Users/karo/.nuget/packages/",
-        "outputPath": "/Users/karo/Desktop/code/studia-sem5/wyspaGier/QuickFun/QuickFun.Infrastructure/obj/",
+        "outputPath": "/Users/karo/Desktop/wyspaGier/QuickFun/QuickFun.Infrastructure/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/Users/karo/.nuget/NuGet/NuGet.Config"
@@ -714,11 +714,11 @@
           "net10.0": {
             "targetAlias": "net10.0",
             "projectReferences": {
-              "/Users/karo/Desktop/code/studia-sem5/wyspaGier/QuickFun/QuickFun.Application/QuickFun.Application.csproj": {
-                "projectPath": "/Users/karo/Desktop/code/studia-sem5/wyspaGier/QuickFun/QuickFun.Application/QuickFun.Application.csproj"
+              "/Users/karo/Desktop/wyspaGier/QuickFun/QuickFun.Application/QuickFun.Application.csproj": {
+                "projectPath": "/Users/karo/Desktop/wyspaGier/QuickFun/QuickFun.Application/QuickFun.Application.csproj"
               },
-              "/Users/karo/Desktop/code/studia-sem5/wyspaGier/QuickFun/QuickFun.Domain/QuickFun.Domain.csproj": {
-                "projectPath": "/Users/karo/Desktop/code/studia-sem5/wyspaGier/QuickFun/QuickFun.Domain/QuickFun.Domain.csproj"
+              "/Users/karo/Desktop/wyspaGier/QuickFun/QuickFun.Domain/QuickFun.Domain.csproj": {
+                "projectPath": "/Users/karo/Desktop/wyspaGier/QuickFun/QuickFun.Domain/QuickFun.Domain.csproj"
               }
             }
           }
@@ -739,6 +739,10 @@
         "net10.0": {
           "targetAlias": "net10.0",
           "dependencies": {
+            "Blazored.LocalStorage": {
+              "target": "Package",
+              "version": "[4.3.0, )"
+            },
             "Microsoft.EntityFrameworkCore": {
               "target": "Package",
               "version": "[10.0.1, )"

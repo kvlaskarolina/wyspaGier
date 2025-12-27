@@ -610,11 +610,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/karo/Desktop/code/studia-sem5/wyspaGier/QuickFun/QuickFun.Application/QuickFun.Application.csproj",
+      "projectUniqueName": "/Users/karo/Desktop/wyspaGier/QuickFun/QuickFun.Application/QuickFun.Application.csproj",
       "projectName": "QuickFun.Application",
-      "projectPath": "/Users/karo/Desktop/code/studia-sem5/wyspaGier/QuickFun/QuickFun.Application/QuickFun.Application.csproj",
+      "projectPath": "/Users/karo/Desktop/wyspaGier/QuickFun/QuickFun.Application/QuickFun.Application.csproj",
       "packagesPath": "/Users/karo/.nuget/packages/",
-      "outputPath": "/Users/karo/Desktop/code/studia-sem5/wyspaGier/QuickFun/QuickFun.Application/obj/",
+      "outputPath": "/Users/karo/Desktop/wyspaGier/QuickFun/QuickFun.Application/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/Users/karo/.nuget/NuGet/NuGet.Config"
@@ -629,8 +629,8 @@
         "net10.0": {
           "targetAlias": "net10.0",
           "projectReferences": {
-            "/Users/karo/Desktop/code/studia-sem5/wyspaGier/QuickFun/QuickFun.Domain/QuickFun.Domain.csproj": {
-              "projectPath": "/Users/karo/Desktop/code/studia-sem5/wyspaGier/QuickFun/QuickFun.Domain/QuickFun.Domain.csproj"
+            "/Users/karo/Desktop/wyspaGier/QuickFun/QuickFun.Domain/QuickFun.Domain.csproj": {
+              "projectPath": "/Users/karo/Desktop/wyspaGier/QuickFun/QuickFun.Domain/QuickFun.Domain.csproj"
             }
           }
         }

@@ -1,11 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "a423NQ0wjfM=",
+  "dgSpecHash": "wQWg+RpXLJs=",
   "success": true,
-  "projectFilePath": "/Users/karo/Desktop/code/studia-sem5/wyspaGier/QuickFun/QuickFun.Web/QuickFun.Web.csproj",
+  "projectFilePath": "/Users/karo/Desktop/wyspaGier/QuickFun/QuickFun.Web/QuickFun.Web.csproj",
   "expectedPackageFiles": [
     "/Users/karo/.nuget/packages/automapper/16.0.0/automapper.16.0.0.nupkg.sha512",
     "/Users/karo/.nuget/packages/automapper.extensions.microsoft.dependencyinjection/12.0.1/automapper.extensions.microsoft.dependencyinjection.12.0.1.nupkg.sha512",
+    "/Users/karo/.nuget/packages/blazored.localstorage/4.3.0/blazored.localstorage.4.3.0.nupkg.sha512",
     "/Users/karo/.nuget/packages/fluentvalidation/12.1.1/fluentvalidation.12.1.1.nupkg.sha512",
     "/Users/karo/.nuget/packages/mediatr/14.0.0/mediatr.14.0.0.nupkg.sha512",
     "/Users/karo/.nuget/packages/mediatr.contracts/2.0.1/mediatr.contracts.2.0.1.nupkg.sha512",
@@ -66,9 +67,9 @@
       "code": "NU1608",
       "level": "Warning",
       "message": "Detected package version outside of dependency constraint: AutoMapper.Extensions.Microsoft.DependencyInjection 12.0.1 requires AutoMapper (= 12.0.1) but version AutoMapper 16.0.0 was resolved.",
-      "projectPath": "/Users/karo/Desktop/code/studia-sem5/wyspaGier/QuickFun/QuickFun.Web/QuickFun.Web.csproj",
+      "projectPath": "/Users/karo/Desktop/wyspaGier/QuickFun/QuickFun.Web/QuickFun.Web.csproj",
       "warningLevel": 1,
-      "filePath": "/Users/karo/Desktop/code/studia-sem5/wyspaGier/QuickFun/QuickFun.Web/QuickFun.Web.csproj",
+      "filePath": "/Users/karo/Desktop/wyspaGier/QuickFun/QuickFun.Web/QuickFun.Web.csproj",
       "libraryId": "AutoMapper",
       "targetGraphs": [
         "net10.0",

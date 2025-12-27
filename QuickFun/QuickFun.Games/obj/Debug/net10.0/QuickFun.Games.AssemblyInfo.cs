@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("QuickFun.Games")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+9c7c9d60e75b157de8dec5a8d37b8d06fbe38e73")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+15104c0a70a015563453ec1aad97732a77e469ff")]
 [assembly: System.Reflection.AssemblyProductAttribute("QuickFun.Games")]
 [assembly: System.Reflection.AssemblyTitleAttribute("QuickFun.Games")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/karo/Desktop/code/studia-sem5/wyspaGier/QuickFun/QuickFun.Domain/QuickFun.Domain.csproj",
+      "projectUniqueName": "/Users/karo/Desktop/wyspaGier/QuickFun/QuickFun.Domain/QuickFun.Domain.csproj",
       "projectName": "QuickFun.Domain",
-      "projectPath": "/Users/karo/Desktop/code/studia-sem5/wyspaGier/QuickFun/QuickFun.Domain/QuickFun.Domain.csproj",
+      "projectPath": "/Users/karo/Desktop/wyspaGier/QuickFun/QuickFun.Domain/QuickFun.Domain.csproj",
       "packagesPath": "/Users/karo/.nuget/packages/",
-      "outputPath": "/Users/karo/Desktop/code/studia-sem5/wyspaGier/QuickFun/QuickFun.Domain/obj/",
+      "outputPath": "/Users/karo/Desktop/wyspaGier/QuickFun/QuickFun.Domain/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/Users/karo/.nuget/NuGet/NuGet.Config"

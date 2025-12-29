@@ -1,6 +1,8 @@
 using System;
 using System.Linq;
 using QuickFun.Domain.Enums;
+using QuickFun.Games.Memory.Strategies;
+//check that !!!! using QuickFun.Games.Engines; // Jeśli IGameEngine tam jest
 namespace QuickFun.Games.Memory;
 
 public class MemoryCard
@@ -12,21 +14,41 @@ public class MemoryCard
 }
 
 public class MemoryEngine : IGameEngine
+
 {
+    private IMemoryDifficultyStrategy? _strategy;
+    public int Columns => _strategy?.Columns ?? 4;
     public GameType Type => GameType.Memory;
     public string Name => "Memory";
     public int Score { get; private set; } = 0;
     public List<MemoryCard> Cards { get; private set; } = new();
-    public string Message { get; private set; } = "jeszcze nie wiem jaki komunikat";
+    public string Message { get; private set; } = "Wybierz poziom trudności";
+    public bool IsGameOver { get; private set; } = false;
 
     public MemoryEngine()
     {
+        ResetState();
+
+    }
+    private void ResetState()
+    {
+        Score = 0;
+        IsGameOver = false;
+        _isBusy = false;
+        _firstCard = null;
+        _secondCard = null;
+    }
+
+    public void SetDifficulty(IMemoryDifficultyStrategy strategy)
+    {
+        _strategy = strategy;
         Reset();
     }
 
     public void Reset()
     {
-        Score = 0;
+        if (_strategy == null) return;
+        ResetState();
         Message = "Znajdź pary obrazków";
         InitializeGame();
     }
@@ -36,18 +58,24 @@ public class MemoryEngine : IGameEngine
         var paths = new List<string>
         {
             "/images/imbir.png", "/images/jablka.png", "/images/lody.png", "/images/nos.png",
-            "/images/pies.png", "/images/piwo.png", "/images/superman.png", "/images/truskawka.png"
+            "/images/pies.png", "/images/piwo.png", "/images/superman.png", "/images/truskawka.png",
+            "/images/watermelon.png", "/images/eggplant.png", "/images/plankton.png", "/images/squidward.png",
+            "/images/bravo.png",  "/images/tree.png",  "/images/gpt.png",  "/images/messi.png",
+            "/images/fcb.png",  "/images/super.png",
         };
 
-        var pathsPairs = paths.Concat(paths).ToList();
+        int totalCards = _strategy.Rows * _strategy.Columns;
+        int pairsNeeded = totalCards / 2;
 
-        var random = new Random();
-        var shuffled = pathsPairs.OrderBy(x => Guid.NewGuid()).ToList();
+        var selectedPaths = paths.Take(pairsNeeded).ToList();
+        var pathsPairs = selectedPaths.Concat(selectedPaths).OrderBy(x => Guid.NewGuid()).ToList();
 
-        this.Cards = shuffled.Select((path, index) => new MemoryCard
+        this.Cards = pathsPairs.Select((path, index) => new MemoryCard
         {
             Id = index,
-            ImageUrl = path
+            ImageUrl = path,
+            IsRevealed = false,
+            IsMatched = false
         }).ToList();
     }
 
@@ -58,26 +86,22 @@ public class MemoryEngine : IGameEngine
 
     public async Task Start(Func<Task> onStateChanged)
     {
-        Reset();
+        if (_strategy == null) return;
 
-        foreach (var card in Cards)
-            card.IsRevealed = true;
-
-        Message = "Zapamiętaj obrazki!";
+        Message = $"Zapamiętaj układ!";
+        foreach (var card in Cards) card.IsRevealed = true;
         await onStateChanged();
 
-        await Task.Delay(3000);
+        await Task.Delay(_strategy.DelayMs);
 
-        foreach (var card in Cards)
-            card.IsRevealed = false;
-
+        foreach (var card in Cards) card.IsRevealed = false;
         Message = "Zaczynamy! Szukaj par.";
         await onStateChanged();
     }
 
     public async Task HandleCardClick(MemoryCard clicked)
     {
-        if (_isBusy || clicked.IsRevealed || clicked.IsMatched) return;
+        if (_isBusy || clicked.IsRevealed || clicked.IsMatched || IsGameOver) return;
         clicked.IsRevealed = true;
         if (_firstCard == null)
         {
@@ -98,12 +122,13 @@ public class MemoryEngine : IGameEngine
         {
             _firstCard.IsMatched = true;
             _secondCard.IsMatched = true;
-            Score += 1;
-            Message = "Znaleziono parę.";
+            Score += 5;
+            Message = "Znaleziono parę!";
         }
         else
         {
             Message = "Nie pasują!";
+            Score -= 2;
             await Task.Delay(1000);
             _firstCard.IsRevealed = false;
             _secondCard.IsRevealed = false;
@@ -115,8 +140,6 @@ public class MemoryEngine : IGameEngine
 
         CheckWin();
     }
-
-    public bool IsGameOver { get; private set; } = false;
 
     private void CheckWin()
     {

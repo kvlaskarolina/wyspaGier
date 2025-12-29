@@ -1,4 +1,4 @@
-@page "/game/memory"
+@page "/memory"
 @using QuickFun.Games.Memory
 @using QuickFun.Domain.Enums
 @using QuickFun.Games
@@ -26,10 +26,9 @@
         <div class="board-memory">
             @foreach (var card in game.Cards)
             {
-                <button class="card @(card.IsRevealed || card.IsMatched ? "flipped" : "")"
-                        @onclick="() => HandleClick(card)"
-                        disabled="@game.IsGameOver">
-                    
+                <button class="card @(card.IsRevealed || card.IsMatched ? "flipped" : "")" @onclick="() => HandleClick(card)"
+                    disabled="@game.IsGameOver">
+
                     @if (card.IsRevealed || card.IsMatched)
                     {
                         <img src="@card.ImageUrl" style="width: 100%; height: 100%; object-fit: contain;" />

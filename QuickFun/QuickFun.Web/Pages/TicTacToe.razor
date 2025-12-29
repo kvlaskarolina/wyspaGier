@@ -3,12 +3,12 @@
 @using QuickFun.Domain.Enums
 @using QuickFun.Games
 @using QuickFun.Application.Interfaces
+@using QuickFun.Domain.Entities
 @inject IGameFactory Factory
 @inject IGameSessionService SessionService
 
 @namespace QuickFun.Games
 
-<PageTitle>Kilko i Krzyżyk</PageTitle>
 
 <div class="game-container">
     <h1>@game.Name</h1>
@@ -87,7 +87,6 @@
         background: #f0f0f0;
         border: 2px solid #ccc;
         border-radius: 8px;
-        transition: background 0.2s;
     }
 
     .cell:hover:not(:disabled) {

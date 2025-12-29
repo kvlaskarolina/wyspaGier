@@ -1,164 +1,149 @@
 @page "/game/{GameTypeString}"
+
 @using QuickFun.Domain.Enums
 @using QuickFun.Games
 @using QuickFun.Games.Engines
-@using QuickFun.Application.Interfaces
-@using QuickFun.Games.Memory
+@using QuickFun.Web.Components.Views
+
 @inject IGameFactory GameFactory
-@inject IGameSessionService SessionService
+@inject NavigationManager Navigation
 
 <div class="game-layout">
     @if (CurrentGame == null)
     {
-        <p>Ładowanie gry...</p>
+        <div class="error-container">
+            <h2>Nie znaleziono gry</h2>
+            <p>Przepraszamy, ale gra "@GameTypeString" nie istnieje lub nie została jeszcze zaimplementowana.</p>
+            <a href="/" class="btn btn-secondary">Wróć do menu</a>
+        </div>
     }
     else
     {
-        <h1>@CurrentGame.Name</h1>
+        <h1 class="game-title">@CurrentGame.Name</h1>
 
-        @* SEKCJA DYNAMICZNA: Tutaj sprawdzamy, co wyprodukowała fabryka *@
-
-        @if (CurrentGame is TicTacToeEngine ttt)
-        {
-            <div class="status">@ttt.Message</div>
-            <div class="ttt-board">
-                @for (int i = 0; i < 9; i++)
-                {
-                    int index = i;
-                    <button class="cell" @onclick="() => HandleTicTacToeMove(ttt, index)" disabled="@ttt.IsGameOver">
-                        @ttt.Board[i]
-                    </button>
-                }
-            </div>
-        }
-        else if (CurrentGame is SnakeEngine snake)
-        {
-            @* Tutaj w przyszłości dodasz widok Snake'a *@
-            <div class="snake-placeholder">
-                Gra Snake w budowie! Twój wynik: @snake.Score
-            </div>
-        }
-        else if (CurrentGame is MemoryEngine memory)
-        {
-            <div class="status">@memory.Message</div>
-            <p>Punkty: @memory.Score</p>
-            
-            <div class="board-memory">
-                @foreach (var card in memory.Cards)
-                {
-                    <button class="card @(card.IsRevealed || card.IsMatched ? "flipped" : "")"
-                            @onclick="() => memory.HandleCardClick(card)"
-                            disabled="@memory.IsGameOver">
-                        
-                        @if (card.IsRevealed || card.IsMatched)
-                        {
-                            <img src="@card.ImageUrl" style="width: 100%; height: 100%; object-fit: contain;" />
-                        }
-                        else
-                        {
-                            <span>?</span>
-                        }
-                    </button>
-                }
-            </div>
-        }
+        <div class="game-content">
+            @if (CurrentGame is TicTacToeEngine ttt)
+            {
+                @* Przekazujemy silnik do wydzielonego komponentu *@
+                <TicTacToeView Engine="ttt" />
+            }
+            else if (CurrentGame is SnakeEngine snake)
+            {
+                <div class="snake-placeholder">
+                    <h3>Gra Snake</h3>
+                    <p>Logika węża zostanie zaimplementowana wkrótce!</p>
+                    <p>Aktualny wynik: @snake.Score</p>
+                </div>
+            }
+        </div>
 
         <div class="controls">
-            <button class="btn" @onclick="Reset">Restart</button>
-            <a href="/" class="btn btn-secondary">Powrót do menu</a>
+            <button class="btn btn-primary" @onclick="Reset">Restart gry</button>
+            <button class="btn btn-secondary" @onclick="GoBack">Powrót do wyspy gier</button>
         </div>
     }
 </div>
 
 @code {
-    [Parameter] public string GameTypeString { get; set; }
-    private IGameEngine CurrentGame { get; set; }
+    [Parameter]
+    public string? GameTypeString { get; set; }
 
-    // Ta metoda wykonuje się, gdy wejdziesz na stronę lub zmienisz parametr w URL
-    protected override async Task OnParametersSetAsync() // Zmieniamy na Async!
+    private IGameEngine? CurrentGame { get; set; }
+
+    // OnParametersSet wykonuje się za każdym razem, gdy zmienia się URL (np. przechodzisz z /game/Snake na /game/TicTacToe)
+    protected override void OnParametersSet()
     {
         if (Enum.TryParse<GameType>(GameTypeString, true, out var type))
         {
+            // Fabryka tworzy nową instancję silnika gry
             CurrentGame = GameFactory.CreateGame(type);
-
-            // Dodaj to: Jeśli to gra Memory, uruchom odliczanie
-            if (CurrentGame is MemoryEngine memory)
-            {
-                await memory.Start(() => InvokeAsync(StateHasChanged));
-            }
+        }
+        else
+        {
+            CurrentGame = null;
         }
     }
 
-    private async Task HandleTicTacToeMove(TicTacToeEngine engine, int index)
+    private void Reset()
     {
-        engine.MakeMove(index);
-
+        CurrentGame?.Reset();
     }
 
-    private void Reset() => CurrentGame?.Reset();
+    private void GoBack()
+    {
+        Navigation.NavigateTo("/");
+    }
 }
 
 <style>
-    .board-memory {
-        display: grid;
-        grid-template-columns: repeat(4, 100px);
-        gap: 10px;
-        justify-content: center;
-        margin: 20px 0;
-    }
-
-    .card {
-        width: 100px;
-        height: 100px;
-        background-color: #2c3e50;
-        color: white;
-        border-radius: 8px;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 1.5rem;
-    }
-
-    .card.flipped {
-        background-color: white;
-        border: 2px solid #3498db;
-    }
     .game-layout {
-        text-align: center;
-        max-width: 500px;
+        max-width: 600px;
         margin: 2rem auto;
+        padding: 20px;
+        text-align: center;
+        background-color: #ffffff;
+        border-radius: 15px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
     }
 
-    .ttt-board {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 10px;
-        margin: 1rem 0;
+    .game-title {
+        color: #333;
+        margin-bottom: 1.5rem;
+        font-size: 2.5rem;
     }
 
-    .cell {
-        height: 100px;
-        font-size: 2rem;
-        background: white;
-        border: 2px solid #333;
-        border-radius: 8px;
+    .game-content {
+        margin: 2rem 0;
+        min-height: 300px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .controls {
+        display: flex;
+        gap: 15px;
+        justify-content: center;
+        margin-top: 2rem;
     }
 
     .btn {
-        padding: 10px 20px;
-        cursor: pointer;
-        background: #28a745;
-        color: white;
+        padding: 12px 25px;
+        border-radius: 8px;
         border: none;
-        border-radius: 5px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: transform 0.1s, background-color 0.2s;
+    }
+
+    .btn:active {
+        transform: scale(0.95);
+    }
+
+    .btn-primary {
+        background-color: #28a745;
+        color: white;
+    }
+
+    .btn-primary:hover {
+        background-color: #218838;
     }
 
     .btn-secondary {
-        background: #6c757d;
+        background-color: #6c757d;
+        color: white;
         text-decoration: none;
-        margin-left: 10px;
-        display: inline-block;
+    }
+
+    .btn-secondary:hover {
+        background-color: #5a6268;
+    }
+
+    .snake-placeholder {
+        padding: 40px;
+        background-color: #e9ecef;
+        border-radius: 10px;
+        border: 2px dashed #adb5bd;
     }
 </style>
-

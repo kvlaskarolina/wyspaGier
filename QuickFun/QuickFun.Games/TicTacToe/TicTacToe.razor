@@ -49,7 +49,11 @@
         // Jeśli gra się skończyła, zapisujemy wynik do LocalStorage
         if (game.IsGameOver)
         {
-            await SessionService.AddGameResultAsync(game.Name, game.Score);
+            await SessionService.AddGameResultAsync(new GameResult
+            {
+                Type = GameType.TicTacToe,
+                Score = game.Score
+            });
         }
     }
 

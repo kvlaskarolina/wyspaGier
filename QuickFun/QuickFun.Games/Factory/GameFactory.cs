@@ -1,5 +1,6 @@
 using QuickFun.Domain.Enums;
 using QuickFun.Games.Engines;
+using QuickFun.Games.Memory;
 
 namespace QuickFun.Games
 {
@@ -15,6 +16,7 @@ namespace QuickFun.Games
             return type switch
             {
                 GameType.TicTacToe => new TicTacToeEngine(),
+                GameType.Memory => new MemoryEngine(),
                 GameType.Snake => new SnakeEngine(),
                 _ => throw new ArgumentException("Nieznana gra")
             };

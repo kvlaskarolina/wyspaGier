@@ -1,0 +1,140 @@
+@page "/memory"
+@using QuickFun.Games.Memory
+@using QuickFun.Domain.Enums
+@using QuickFun.Games
+@using QuickFun.Application.Interfaces
+@using QuickFun.Domain.Entities
+
+@inject IGameFactory Factory
+@inject IGameSessionService SessionService
+
+<h1>TEST 123</h1>
+
+<PageTitle>MEMOR</PageTitle>
+
+<div class="game-container">
+    @if (game == null)
+    {
+        <p><em>Ładowanie gry...</em></p>
+    }
+    else
+    {
+        <h1>@game.Name</h1>
+        <p>Liczba kart w silniku: @game.Cards.Count</p>
+        <p class="status-message">@game.Message</p>
+
+        <div class="board-memory">
+            @foreach (var card in game.Cards)
+            {
+                <button class="card @(card.IsRevealed || card.IsMatched ? "flipped" : "")" @onclick="() => HandleClick(card)"
+                    disabled="@game.IsGameOver">
+
+                    @if (card.IsRevealed || card.IsMatched)
+                    {
+                        <img src="@card.ImageUrl" style="width: 100%; height: 100%; object-fit: contain;" />
+                    }
+                    else
+                    {
+                        <span>?</span>
+                    }
+                </button>
+            }
+        </div>
+
+        <div class="actions">
+            <button class="btn-reset" @onclick="Restart">Nowa gra</button>
+            <a href="/" class="btn-back">Powrót do menu</a>
+        </div>
+    }
+</div>
+
+@code {
+    private MemoryEngine game;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var instance = Factory.CreateGame(GameType.Memory);
+        game = (MemoryEngine)instance;
+
+        await game.Start(() => InvokeAsync(StateHasChanged));
+    }
+
+    private async Task HandleClick(MemoryCard card)
+    {
+        await game.HandleCardClick(card);
+
+        StateHasChanged();
+
+        if (game.IsGameOver)
+        {
+            await SessionService.AddGameResultAsync(new GameResult
+            {
+                Type = GameType.Memory,
+                Score = game.Score
+            });
+        }
+    }
+
+    private void Restart()
+    {
+        game.Reset();
+    }
+}
+
+<style>
+    .game-container {
+        text-align: center;
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 20px;
+    }
+
+    .board-memory {
+        display: grid;
+        grid-template-columns: repeat(4, 120px);
+        gap: 15px;
+        justify-content: center;
+        margin: 20px 0;
+    }
+
+    .card {
+        width: 120px;
+        height: 120px;
+        background-color: #2c3e50;
+        border: 3px solid #34495e;
+        border-radius: 10px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 2rem;
+        color: white;
+        transition: transform 0.2s;
+        padding: 5px;
+    }
+
+    .card:hover:not(:disabled) {
+        transform: scale(1.05);
+    }
+
+    .card.flipped {
+        background-color: white;
+        border-color: #3498db;
+    }
+
+    .status-message {
+        font-size: 1.5rem;
+        font-weight: bold;
+        color: #2c3e50;
+        min-height: 2em;
+    }
+
+    .btn-reset {
+        padding: 10px 25px;
+        background-color: #27ae60;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+</style>

@@ -1,0 +1,196 @@
+@using QuickFun.Games.Memory
+@using QuickFun.Games.Memory.Strategies
+@using QuickFun.Domain.Enums
+@using QuickFun.Application.Interfaces
+@using QuickFun.Domain.Entities
+@inject IGameSessionService SessionService
+
+@namespace QuickFun.Web.Components.Views
+
+<div class="memory-view">
+    @if (!isDifficultySelected)
+    {
+        @* EKRAN WYBORU POZIOMU *@
+        <div class="difficulty-overlay">
+            <h3>Wybierz poziom trudności</h3>
+            <div class="difficulty-buttons">
+                <button class="btn-diff easy" @onclick="() => SelectDifficulty(new EasyStrategyMemory())">
+                    Łatwy <small>(4x4)</small>
+                </button>
+                <button class="btn-diff medium" @onclick="() => SelectDifficulty(new MediumStrategyMemory())">
+                    Średni <small>(6x4)</small>
+                </button>
+                <button class="btn-diff hard" @onclick="() => SelectDifficulty(new HardStrategyMemory())">
+                    Trudny <small>(6x6)</small>
+                </button>
+            </div>
+        </div>
+    }
+    else
+    {
+        @* WIDOK GRY *@
+        <div class="game-header">
+            <p class="status-message">@Engine.Message</p>
+            <p class="score">Punkty: @Engine.Score</p>
+        </div>
+        @* DYNAMICZNY GRID: Liczba kolumn zależy od wybranej strategii *@
+    <div class="board-memory" style="grid-template-columns: repeat(@Engine.Columns, 1fr);">
+        @foreach (var card in Engine.Cards)
+        {
+            <button class="memory-card @(card.IsRevealed || card.IsMatched ? "flipped" : "")"
+                    @onclick="() => OnCardClick(card)"
+                    disabled="@(Engine.IsGameOver || card.IsMatched)">
+                
+                @if (card.IsRevealed || card.IsMatched)
+                {
+                    <img src="@card.ImageUrl" class="card-img" />
+                }
+                else
+                {
+                    <span class="card-back">?</span>
+                }
+            </button>
+        }
+    </div>
+
+    <div class="view-footer">
+        <button class="btn-change-level" @onclick="() => isDifficultySelected = false">
+            « Zmień poziom
+        </button>
+    </div>
+}
+</div>
+@code {
+[Parameter] public MemoryEngine Engine { get; set; } = default!;
+private bool isDifficultySelected = false;
+// Metoda wywoływana po kliknięciu w przycisk poziomu trudności
+private async Task SelectDifficulty(IMemoryDifficultyStrategy strategy)
+{
+    isDifficultySelected = true;
+    Engine.SetDifficulty(strategy); // Tu silnik generuje karty
+    
+    // Wywołujemy animację podglądu kart na starcie
+    await Engine.Start(() => InvokeAsync(StateHasChanged));
+}
+
+protected override void OnInitialized()
+{
+    // Nie odpalamy Engine.Start() tutaj, bo czekamy na wybór poziomu
+}
+
+private async Task OnCardClick(MemoryCard card)
+{
+    await Engine.HandleCardClick(card);
+
+    if (Engine.IsGameOver)
+    {
+        await SessionService.AddGameResultAsync(new GameResult
+        {
+            Type = Engine.Type,
+            Score = Engine.Score
+        });
+    }
+}
+}
+
+<style>
+    .memory-view {
+        width: 100%;
+        max-width: 500px; /* Zwiększone lekko dla trybu 6x6 */
+        margin: 0 auto;
+    }
+
+    /* STYLE EKRANU WYBORU */
+    .difficulty-overlay {
+        text-align: center;
+        padding: 20px;
+    }
+
+    .difficulty-buttons {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        margin-top: 15px;
+    }
+
+    .btn-diff {
+        padding: 15px;
+        border: none;
+        border-radius: 8px;
+        font-weight: bold;
+        color: white;
+        cursor: pointer;
+        transition: transform 0.2s;
+        font-size: 1.1rem;
+    }
+
+    .btn-diff:hover { transform: scale(1.02); }
+    .btn-diff small { display: block; font-weight: normal; opacity: 0.8; }
+
+    .easy { background-color: #27ae60; }
+    .medium { background-color: #f39c12; }
+    .hard { background-color: #e74c3c; }
+
+    /* STYLE PLANSZY */
+    .board-memory {
+        display: grid;
+        /* grid-template-columns ustawiany liniowo w HTML */
+        gap: 8px; 
+        justify-content: center;
+        margin: 15px auto;
+        padding: 5px;
+    }
+
+    .memory-card {
+        width: 100%;
+        aspect-ratio: 1 / 1;
+        background: #2c3e50;
+        border-radius: 6px;
+        border: none;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 4px;
+        transition: transform 0.2s;
+    }
+
+    .memory-card.flipped {
+        background: white;
+        border: 2px solid #3498db;
+    }
+
+    .card-img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+    }
+
+    .status-message {
+        font-size: 1.1rem;
+        font-weight: bold;
+        text-align: center;
+        margin-bottom: 5px;
+        min-height: 1.5em;
+    }
+
+    .score {
+        text-align: center;
+        color: #666;
+        margin-bottom: 10px;
+    }
+
+    .view-footer {
+        margin-top: 15px;
+        text-align: center;
+    }
+
+    .btn-change-level {
+        background: none;
+        border: none;
+        color: #3498db;
+        text-decoration: underline;
+        cursor: pointer;
+        font-size: 0.9rem;
+    }
+</style>

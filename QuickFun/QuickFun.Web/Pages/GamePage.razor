@@ -4,6 +4,7 @@
 @using QuickFun.Games
 @using QuickFun.Games.Engines
 @using QuickFun.Games.Memory
+@using QuickFun.Games.Minesweeper
 @using QuickFun.Web.Components.Views
 
 @inject IGameFactory GameFactory
@@ -30,6 +31,9 @@
             }
             else if (CurrentGame is MemoryEngine memory){
                 <MemoryView Engine="memory" />
+            }
+            else if (CurrentGame is MinesweeperEngine ms){
+                <MinesweeperView Engine="ms" />
             }
             else if (CurrentGame is SnakeEngine snake)
             {

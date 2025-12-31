@@ -1,120 +1,44 @@
 @page "/tictactoe"
 @using QuickFun.Games.Engines
-@using QuickFun.Domain.Enums
-@using QuickFun.Games
-@using QuickFun.Application.Interfaces
-@using QuickFun.Domain.Entities
-@inject IGameFactory Factory
-@inject IGameSessionService SessionService
+@using QuickFun.Games.TicTacToe.Strategies
 
-@namespace QuickFun.Games
+<h3>Tic Tac Toe vs AI</h3>
 
-
-<div class="game-container">
-    <h1>@game.Name</h1>
-    <p class="status-message">@game.Message</p>
-
-    <div class="board">
-        @for (int i = 0; i < 9; i++)
-        {
-            int localIndex = i;
-            <button class="cell @(game.Board[i] != '\0' ? "occupied" : "")" @onclick="() => HandleClick(localIndex)"
-                disabled="@game.IsGameOver">
-                @game.Board[i]
-            </button>
-        }
-    </div>
-
-    <div class="actions">
-        <button class="btn-reset" @onclick="Restart">Zagraj od nowa</button>
-        <a href="/" class="btn-back">Powrót do menu</a>
-    </div>
+<div class="difficulty-selector">
+    <button @onclick="() => SetDifficulty(Level.Easy)">Łatwy</button>
+    <button @onclick="() => SetDifficulty(Level.Medium)">Średni</button>
+    <button @onclick="() => SetDifficulty(Level.Hard)">Trudny</button>
 </div>
 
-@code {
-    private TicTacToeEngine game;
-
-    protected override void OnInitialized()
+<div class="game-board">
+    @for (int i = 0; i < 9; i++)
     {
-        // Używamy Fabryki do stworzenia silnika
-        game = (TicTacToeEngine)Factory.CreateGame(GameType.TicTacToe);
+        int index = i;
+        <button class="cell" @onclick="() => engine.MakeMove(index)"
+            disabled="@(engine.IsGameOver || engine.Board[index] != '\0')">
+            @engine.Board[index]
+        </button>
     }
+</div>
 
-    private async Task HandleClick(int index)
-    {
-        if (game.IsGameOver) return;
+<p>@engine.Message</p>
 
-        game.MakeMove(index);
-
-        // Jeśli gra się skończyła, zapisujemy wynik do LocalStorage
-        if (game.IsGameOver)
-        {
-            await SessionService.AddGameResultAsync(new GameResult
-            {
-                Type = GameType.TicTacToe,
-                Score = game.Score
-            });
-        }
-    }
-
-    private void Restart()
-    {
-        game.Reset();
-    }
+@if (engine.IsGameOver)
+{
+    <button @onclick="ResetGame">Nowa gra</button>
 }
 
-<style>
-    .game-container {
-        text-align: center;
-        margin-top: 50px;
-        font-family: sans-serif;
+@code {
+    private TicTacToeEngineWithAI engine = new();
+
+    private void SetDifficulty(Level level)
+    {
+        engine.SetDifficulty(level);
+        ResetGame();
     }
 
-    .board {
-        display: grid;
-        grid-template-columns: repeat(3, 100px);
-        gap: 10px;
-        justify-content: center;
-        margin: 20px auto;
+    private void ResetGame()
+    {
+        engine.ResetGame();
     }
-
-    .cell {
-        width: 100px;
-        height: 100px;
-        font-size: 2.5rem;
-        font-weight: bold;
-        cursor: pointer;
-        background: #f0f0f0;
-        border: 2px solid #ccc;
-        border-radius: 8px;
-    }
-
-    .cell:hover:not(:disabled) {
-        background: #e0e0e0;
-    }
-
-    .cell.occupied {
-        cursor: not-allowed;
-    }
-
-    .status-message {
-        font-size: 1.5rem;
-        color: #333;
-        height: 2rem;
-    }
-
-    .btn-reset {
-        padding: 10px 20px;
-        background: #28a745;
-        color: white;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-    }
-
-    .btn-back {
-        margin-left: 10px;
-        text-decoration: none;
-        color: #007bff;
-    }
-</style>
+}

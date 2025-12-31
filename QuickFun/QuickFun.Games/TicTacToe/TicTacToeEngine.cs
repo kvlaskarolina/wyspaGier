@@ -4,16 +4,13 @@ namespace QuickFun.Games.Engines
 {
     public class TicTacToeEngine : IGameEngine
     {
-        // Implementacja interfejsu IGameEngine
         public GameType Type => GameType.TicTacToe;
         public string Name => "Kółko i Krzyżyk";
-        public int Score { get; private set; } = 0;
-
-        // Logika specyficzna dla Kółka i Krzyżyk
-        public char[] Board { get; private set; } = new char[9]; // 9 pól: 0-8
-        public char CurrentPlayer { get; private set; } = 'X';
-        public bool IsGameOver { get; private set; }
-        public string Message { get; private set; } = "Zaczyna X";
+        public int Score { get; protected set; } = 0;
+        public char[] Board { get; protected set; } = new char[9];
+        public char CurrentPlayer { get; protected set; } = 'X';
+        public bool IsGameOver { get; protected set; }
+        public string Message { get; protected set; } = "Zaczyna X";
 
         public TicTacToeEngine()
         {
@@ -31,7 +28,6 @@ namespace QuickFun.Games.Engines
 
         public void MakeMove(int index)
         {
-            // Jeśli pole zajęte lub koniec gry - nic nie rób
             if (IsGameOver || Board[index] != '\0') return;
 
             Board[index] = CurrentPlayer;
@@ -40,7 +36,7 @@ namespace QuickFun.Games.Engines
             {
                 Message = $"Wygrał gracz: {CurrentPlayer}!";
                 IsGameOver = true;
-                Score = 1; // Możesz przyznać 1 punkt za wygraną
+                Score = 1;
             }
             else if (Board.All(c => c != '\0'))
             {
@@ -50,15 +46,13 @@ namespace QuickFun.Games.Engines
             }
             else
             {
-                // Zmiana gracza
                 CurrentPlayer = (CurrentPlayer == 'X') ? 'O' : 'X';
                 Message = $"Ruch gracza: {CurrentPlayer}";
             }
         }
 
-        private bool CheckWinner()
+        protected bool CheckWinner()
         {
-            // Możliwe kombinacje wygrywające
             int[][] winners = new int[][]
             {
                 new[] {0,1,2}, new[] {3,4,5}, new[] {6,7,8}, // Poziomo

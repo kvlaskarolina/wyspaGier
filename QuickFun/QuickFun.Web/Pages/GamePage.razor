@@ -3,7 +3,6 @@
 @using QuickFun.Domain.Enums
 @using QuickFun.Games
 @using QuickFun.Games.Engines
-@using QuickFun.Games.Memory
 @using QuickFun.Web.Components.Views
 
 @inject IGameFactory GameFactory
@@ -25,11 +24,7 @@
         <div class="game-content">
             @if (CurrentGame is TicTacToeEngine ttt)
             {
-                @* Przekazujemy silnik do wydzielonego komponentu *@
                 <TicTacToeView Engine="ttt" />
-            }
-            else if (CurrentGame is MemoryEngine memory){
-                <MemoryView Engine="memory" />
             }
             else if (CurrentGame is SnakeEngine snake)
             {
@@ -55,7 +50,7 @@
     private IGameEngine? CurrentGame { get; set; }
 
     // OnParametersSet wykonuje się za każdym razem, gdy zmienia się URL (np. przechodzisz z /game/Snake na /game/TicTacToe)
-    protected override async Task OnParametersSetAsync()
+    protected override void OnParametersSet()
     {
         if (Enum.TryParse<GameType>(GameTypeString, true, out var type))
         {
@@ -68,16 +63,9 @@
         }
     }
 
-    private async Task Reset()
+    private void Reset()
     {
-        if (CurrentGame == null) return;
-        
-        CurrentGame.Reset();
-
-        if (CurrentGame is MemoryEngine memory)
-        {
-            await memory.Start(() => InvokeAsync(StateHasChanged));
-        }
+        CurrentGame?.Reset();
     }
 
     private void GoBack()
@@ -107,7 +95,7 @@
         margin: 2rem 0;
         min-height: 300px;
         display: flex;
-        flex-direction: colunmn;
+        flex-direction: column;
         justify-content: center;
         align-items: center;
     }

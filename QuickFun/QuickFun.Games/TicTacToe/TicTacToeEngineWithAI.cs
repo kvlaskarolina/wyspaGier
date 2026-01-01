@@ -5,6 +5,7 @@ using System.Reflection;
 
 namespace QuickFun.Games.Engines
 {
+
     public class TicTacToeEngineWithAI : TicTacToeEngine
     {
         private ITicTacToeDifficultyStrategy _aiStrategy;
@@ -44,13 +45,12 @@ namespace QuickFun.Games.Engines
             };
         }
 
-        public new void MakeMove(int index)
+        public async Task MakeMove(int index)
         {
             if (IsGameOver || index < 0 || index >= Board.Length || Board[index] != '\0')
                 return;
 
             Board[index] = CurrentPlayer;
-            Message = $"Gracz zagrał na polu {index + 1}";
 
             if (CheckWinner())
             {
@@ -69,12 +69,14 @@ namespace QuickFun.Games.Engines
             }
 
             CurrentPlayer = 'O';
-            Message = "Ruch AI...";
+
+            await Task.Delay(500);
+            Message = "";
             int aiMove = MakeAIMove();
+
             if (aiMove != -1)
             {
                 Board[aiMove] = CurrentPlayer;
-                Message = $"AI zagrało na polu {aiMove + 1}";
 
                 if (CheckWinner())
                 {
@@ -93,7 +95,8 @@ namespace QuickFun.Games.Engines
                 }
 
                 CurrentPlayer = 'X';
-                Message = "Twój ruch";
+
+
             }
         }
 

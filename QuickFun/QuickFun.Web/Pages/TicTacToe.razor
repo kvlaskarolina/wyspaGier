@@ -1,81 +1,74 @@
 @page "/tictactoe"
 @using QuickFun.Games.Engines
-@using QuickFun.Domain.Enums
-@using QuickFun.Games
-@using QuickFun.Application.Interfaces
-@using QuickFun.Domain.Entities
-@inject IGameFactory Factory
-@inject IGameSessionService SessionService
+@using QuickFun.Games.TicTacToe.Strategies
+<div class="game-layout">
+    <h3>Tic Tac Toe vs AI</h3>
 
-@namespace QuickFun.Games
+    <div class="difficulty-selector">
+        <button class=btn @onclick="() => SetDifficulty(Level.Easy)">Łatwy</button>
+        <button class=btn @onclick="() => SetDifficulty(Level.Medium)">Średni</button>
+        <button class=btn @onclick="() => SetDifficulty(Level.Hard)">Trudny</button>
+    </div>
 
+    <p class="status-message">@engine.Message</p>
 
-<div class="game-container">
-    <h1>@game.Name</h1>
-    <p class="status-message">@game.Message</p>
 
     <div class="board">
         @for (int i = 0; i < 9; i++)
         {
-            int localIndex = i;
-            <button class="cell @(game.Board[i] != '\0' ? "occupied" : "")" @onclick="() => HandleClick(localIndex)"
-                disabled="@game.IsGameOver">
-                @game.Board[i]
+            int index = i;
+            <button class="cell" @onclick="() => engine.MakeMove(index)"
+                disabled="@(engine.IsGameOver || engine.Board[index] != '\0')">
+                @engine.Board[index]
             </button>
         }
     </div>
-
-    <div class="actions">
-        <button class="btn-reset" @onclick="Restart">Zagraj od nowa</button>
-        <a href="/" class="btn-back">Powrót do menu</a>
-    </div>
 </div>
 
+@if (engine.IsGameOver)
+{
+    <button @onclick="ResetGame">Nowa gra</button>
+}
+
 @code {
-    private TicTacToeEngine game;
+    private TicTacToeEngineWithAI engine = new();
 
-    protected override void OnInitialized()
+    private void SetDifficulty(Level level)
     {
-        // Używamy Fabryki do stworzenia silnika
-        game = (TicTacToeEngine)Factory.CreateGame(GameType.TicTacToe);
+        engine.SetDifficulty(level);
+        ResetGame();
     }
 
-    private async Task HandleClick(int index)
+    private void ResetGame()
     {
-        if (game.IsGameOver) return;
-
-        game.MakeMove(index);
-
-        // Jeśli gra się skończyła, zapisujemy wynik do LocalStorage
-        if (game.IsGameOver)
-        {
-            await SessionService.AddGameResultAsync(new GameResult
-            {
-                Type = GameType.TicTacToe,
-                Score = game.Score
-            });
-        }
-    }
-
-    private void Restart()
-    {
-        game.Reset();
+        engine.ResetGame();
     }
 }
 
 <style>
-    .game-container {
+    .game-layout {
+        max-width: 600px;
+        margin: 2rem auto;
+        padding: 20px;
         text-align: center;
-        margin-top: 50px;
-        font-family: sans-serif;
+        background-color: #ffffff;
+        border-radius: 15px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
     }
 
-    .board {
-        display: grid;
-        grid-template-columns: repeat(3, 100px);
-        gap: 10px;
+    .game-title {
+        color: #333;
+        margin-bottom: 1.5rem;
+        font-size: 2.5rem;
+    }
+
+    .game-content {
+        margin: 2rem 0;
+        min-height: 300px;
+        display: flex;
+        flex-direction: column;
         justify-content: center;
-        margin: 20px auto;
+        align-items: center;
     }
 
     .cell {
@@ -89,32 +82,64 @@
         border-radius: 8px;
     }
 
-    .cell:hover:not(:disabled) {
-        background: #e0e0e0;
-    }
-
-    .cell.occupied {
-        cursor: not-allowed;
-    }
-
     .status-message {
         font-size: 1.5rem;
         color: #333;
         height: 2rem;
+        text-align: center;
     }
 
-    .btn-reset {
-        padding: 10px 20px;
-        background: #28a745;
-        color: white;
+    .board {
+        display: grid;
+        grid-template-columns: repeat(3, 100px);
+        gap: 10px;
+        justify-content: center;
+        margin: 20px auto;
+    }
+
+    .controls {
+        display: flex;
+        gap: 15px;
+        justify-content: center;
+        margin-top: 2rem;
+    }
+
+    .btn {
+        padding: 12px 25px;
+        border-radius: 8px;
         border: none;
-        border-radius: 5px;
+        font-weight: bold;
         cursor: pointer;
+        transition: transform 0.1s, background-color 0.2s;
     }
 
-    .btn-back {
-        margin-left: 10px;
+    .btn:active {
+        transform: scale(0.95);
+    }
+
+    .btn-primary {
+        background-color: #28a745;
+        color: white;
+    }
+
+    .btn-primary:hover {
+        background-color: #218838;
+    }
+
+    .btn-secondary {
+        background-color: #6c757d;
+        color: white;
         text-decoration: none;
-        color: #007bff;
+    }
+
+    .btn-secondary:hover {
+        background-color: #5a6268;
+    }
+
+    .snake-placeholder {
+        padding: 40px;
+        background-color: #e9ecef;
+        border-radius: 10px;
+        border: 2px dashed #adb5bd;
     }
 </style>

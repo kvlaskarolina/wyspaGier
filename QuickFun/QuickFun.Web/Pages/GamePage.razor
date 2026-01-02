@@ -59,12 +59,10 @@
 
     private IGameEngine? CurrentGame { get; set; }
 
-    // OnParametersSet wykonuje się za każdym razem, gdy zmienia się URL (np. przechodzisz z /game/Snake na /game/TicTacToe)
     protected override async Task OnParametersSetAsync()
     {
         if (Enum.TryParse<GameType>(GameTypeString, true, out var type))
         {
-            // Fabryka tworzy nową instancję silnika gry
             CurrentGame = GameFactory.CreateGame(type);
         }
         else

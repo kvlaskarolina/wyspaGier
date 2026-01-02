@@ -57,6 +57,7 @@ public class MinesweeperEngine : IGameEngine
         IsGameOver = false;
         IsWin = false;
         Score = 0;
+        Message = "Powodzenia!";
         OnStateChanged?.Invoke();
     }
 

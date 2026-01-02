@@ -4,6 +4,7 @@
 @using QuickFun.Games
 @using QuickFun.Games.Engines
 @using QuickFun.Games.Memory
+@using QuickFun.Games.Hangman
 @using QuickFun.Web.Components.Views
 
 @inject IGameFactory GameFactory
@@ -25,11 +26,15 @@
         <div class="game-content">
             @if (CurrentGame is TicTacToeEngine ttt)
             {
-                @* Przekazujemy silnik do wydzielonego komponentu *@
                 <TicTacToeView Engine="ttt" />
             }
-            else if (CurrentGame is MemoryEngine memory){
+            else if (CurrentGame is MemoryEngine memory)
+            {
                 <MemoryView Engine="memory" />
+            }
+            else if (CurrentGame is HangmanEngine hangman)
+            {
+                <HangmanView Engine="hangman" />
             }
             else if (CurrentGame is SnakeEngine snake)
             {
@@ -54,13 +59,20 @@
 
     private IGameEngine? CurrentGame { get; set; }
 
-    // OnParametersSet wykonuje się za każdym razem, gdy zmienia się URL (np. przechodzisz z /game/Snake na /game/TicTacToe)
     protected override async Task OnParametersSetAsync()
     {
         if (Enum.TryParse<GameType>(GameTypeString, true, out var type))
         {
-            // Fabryka tworzy nową instancję silnika gry
             CurrentGame = GameFactory.CreateGame(type);
+
+            if (CurrentGame is MemoryEngine memory)
+            {
+                await memory.Start(() => InvokeAsync(StateHasChanged));
+            }
+            else
+            {
+                CurrentGame.Reset();
+            }
         }
         else
         {
@@ -78,6 +90,8 @@
         {
             await memory.Start(() => InvokeAsync(StateHasChanged));
         }
+        
+        StateHasChanged();
     }
 
     private void GoBack()
@@ -88,26 +102,28 @@
 
 <style>
     .game-layout {
-        max-width: 600px;
+        max-width: 700px;
         margin: 2rem auto;
-        padding: 20px;
+        padding: 40px;
         text-align: center;
         background-color: #ffffff;
         border-radius: 15px;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+        border: 2px solid #ccc;
     }
 
     .game-title {
         color: #333;
         margin-bottom: 1.5rem;
         font-size: 2.5rem;
+        font-family: sans-serif;
     }
 
     .game-content {
         margin: 2rem 0;
         min-height: 300px;
         display: flex;
-        flex-direction: colunmn;
+        flex-direction: column;
         justify-content: center;
         align-items: center;
     }
@@ -126,6 +142,7 @@
         font-weight: bold;
         cursor: pointer;
         transition: transform 0.1s, background-color 0.2s;
+        font-size: 1rem;
     }
 
     .btn:active {
@@ -149,12 +166,10 @@
 
     .btn-secondary:hover {
         background-color: #5a6268;
+        color: white;
     }
 
-    .snake-placeholder {
-        padding: 40px;
-        background-color: #e9ecef;
-        border-radius: 10px;
-        border: 2px dashed #adb5bd;
+    .error-container {
+        padding: 20px;
     }
 </style>

@@ -5,6 +5,7 @@
 @using QuickFun.Games.Engines
 @using QuickFun.Games.Memory
 @using QuickFun.Web.Components.Views
+@using QuickFun.Games.Engines.Sudoku
 
 @inject IGameFactory GameFactory
 @inject NavigationManager Navigation
@@ -25,11 +26,15 @@
         <div class="game-content">
             @if (CurrentGame is TicTacToeEngine ttt)
             {
-                @* Przekazujemy silnik do wydzielonego komponentu *@
                 <TicTacToeView Engine="ttt" />
             }
-            else if (CurrentGame is MemoryEngine memory){
+            else if (CurrentGame is MemoryEngine memory)
+            {
                 <MemoryView Engine="memory" />
+            }
+            else if (CurrentGame is SudokuEngine sudoku)
+            {
+                <SudokuView Engine="sudoku" />
             }
             else if (CurrentGame is SnakeEngine snake)
             {
@@ -71,13 +76,13 @@
     private async Task Reset()
     {
         if (CurrentGame == null) return;
-        
         CurrentGame.Reset();
 
         if (CurrentGame is MemoryEngine memory)
-        {
             await memory.Start(() => InvokeAsync(StateHasChanged));
-        }
+
+        if (CurrentGame is SudokuEngine sudoku)
+            await sudoku.Start(() => InvokeAsync(StateHasChanged));
     }
 
     private void GoBack()

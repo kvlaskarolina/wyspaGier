@@ -1,0 +1,64 @@
+@using QuickFun.Games.Engines.Sudoku
+@namespace QuickFun.Web.Components.Views
+
+@if (Engine.IsLoading)
+{
+    <div class="spinner">Generowanie planszy przez Haskella...</div>
+}
+else if (Engine.Board != null)
+{
+    <table class="sudoku-table">
+        @for (int r = 0; r < 9; r++)
+        {
+            <tr>
+                @for (int c = 0; c < 9; c++)
+                {
+                    var val = Engine.Board[r][c];
+                    <td class="@(val == 0 ? "empty" : "filled")">
+                        @(val == 0 ? "" : val.ToString())
+                    </td>
+                }
+            </tr>
+        }
+    </table>
+}
+
+<style>
+    .sudoku-table {
+        border-collapse: collapse;
+        margin: auto;
+        border: 2px solid black;
+    }
+
+    .sudoku-table td {
+        width: 40px;
+        height: 40px;
+        border: 1px solid #ccc;
+        text-align: center;
+        font-weight: bold;
+    }
+
+    .sudoku-table td:nth-child(3n) {
+        border-right: 2px solid black;
+    }
+
+    .sudoku-table tr:nth-child(3n) td {
+        border-bottom: 2px solid black;
+    }
+
+    .filled {
+        background-color: #f8f9fa;
+    }
+</style>
+
+@code {
+    [Parameter] public SudokuEngine Engine { get; set; } = default!;
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (Engine.Board == null)
+        {
+            await Engine.Start(() => InvokeAsync(StateHasChanged));
+        }
+    }
+}

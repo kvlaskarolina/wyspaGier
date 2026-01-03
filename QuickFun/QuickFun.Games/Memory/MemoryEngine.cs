@@ -2,7 +2,9 @@ using System;
 using System.Linq;
 using QuickFun.Domain.Enums;
 using QuickFun.Games.Memory.Strategies;
-//check that !!!! using QuickFun.Games.Engines; // Jeśli IGameEngine tam jest
+using System.Threading;
+using System.Threading.Tasks;
+using System.Collections.Generic;
 namespace QuickFun.Games.Memory;
 
 public class MemoryCard
@@ -24,6 +26,7 @@ public class MemoryEngine : IGameEngine
     public List<MemoryCard> Cards { get; private set; } = new();
     public string Message { get; private set; } = "Wybierz poziom trudności";
     public bool IsGameOver { get; private set; } = false;
+    private CancellationTokenSource? _startCts;
 
     public MemoryEngine()
     {
@@ -32,6 +35,9 @@ public class MemoryEngine : IGameEngine
     }
     private void ResetState()
     {
+        _startCts?.Cancel();
+        _startCts = null;
+
         Score = 0;
         IsGameOver = false;
         _isBusy = false;
@@ -88,15 +94,39 @@ public class MemoryEngine : IGameEngine
     {
         if (_strategy == null) return;
 
-        Message = $"Zapamiętaj układ!";
-        foreach (var card in Cards) card.IsRevealed = true;
-        await onStateChanged();
+        // Tworzymy nowy token dla tego konkretnego uruchomienia
+        _startCts?.Cancel(); // Na wszelki wypadek anulujemy poprzedni
+        _startCts = new CancellationTokenSource();
+        var token = _startCts.Token;
 
-        await Task.Delay(_strategy.DelayMs);
+        try
+        {
+            _isBusy = true; // Blokujemy klikanie podczas podglądu
+            Message = $"Zapamiętaj układ!";
+            
+            foreach (var card in Cards) card.IsRevealed = true;
+            await onStateChanged();
 
-        foreach (var card in Cards) card.IsRevealed = false;
-        Message = "Zaczynamy! Szukaj par.";
-        await onStateChanged();
+            // Przekazujemy token do Delay
+            await Task.Delay(_strategy.DelayMs, token);
+
+            foreach (var card in Cards) card.IsRevealed = false;
+            Message = "Zaczynamy! Szukaj par.";
+            _isBusy = false; // Odblokowujemy klikanie
+            await onStateChanged();
+        }
+        catch (TaskCanceledException)
+        {
+            // Metoda została przerwana, bo wybrano nowy poziom - nic nie robimy
+        }
+        finally
+        {
+            // Jeśli to był ostatni proces i nie został anulowany, czyścimy
+            if (_startCts?.Token == token)
+            {
+                _isBusy = false;
+            }
+        }
     }
 
     public async Task HandleCardClick(MemoryCard clicked)

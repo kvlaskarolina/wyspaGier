@@ -58,11 +58,14 @@
     </div>
 
     @* STOPKA *@
-    <div class="saper-footer">
-        <button class="btn-reset" @onclick="Engine.Reset">
-            🔄 NOWA GRA
-        </button>
-    </div>
+    @if (Engine.IsGameOver)
+    {
+        <div class="saper-footer">
+            <button class="btn-reset" @onclick="Engine.Reset">
+                🔄 ZAGRAJ PONOWNIE
+            </button>
+        </div>
+    }
 </div>
 
 @code {

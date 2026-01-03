@@ -94,34 +94,31 @@ public class MemoryEngine : IGameEngine
     {
         if (_strategy == null) return;
 
-        // Tworzymy nowy token dla tego konkretnego uruchomienia
-        _startCts?.Cancel(); // Na wszelki wypadek anulujemy poprzedni
+        _startCts?.Cancel();
         _startCts = new CancellationTokenSource();
         var token = _startCts.Token;
 
         try
         {
-            _isBusy = true; // Blokujemy klikanie podczas podglądu
+            _isBusy = true;
             Message = $"Zapamiętaj układ!";
             
             foreach (var card in Cards) card.IsRevealed = true;
             await onStateChanged();
 
-            // Przekazujemy token do Delay
             await Task.Delay(_strategy.DelayMs, token);
 
             foreach (var card in Cards) card.IsRevealed = false;
             Message = "Zaczynamy! Szukaj par.";
-            _isBusy = false; // Odblokowujemy klikanie
+            _isBusy = false;
             await onStateChanged();
         }
         catch (TaskCanceledException)
         {
-            // Metoda została przerwana, bo wybrano nowy poziom - nic nie robimy
+            // metoda została przerwana, bo wybrano nowy poziom - nic nie robimy
         }
         finally
         {
-            // Jeśli to był ostatni proces i nie został anulowany, czyścimy
             if (_startCts?.Token == token)
             {
                 _isBusy = false;

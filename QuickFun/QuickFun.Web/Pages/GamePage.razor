@@ -34,7 +34,7 @@
             }
             else if (CurrentGame is HangmanEngine hangman)
             {
-                <HangmanView Engine="hangman" />
+                <HangmanView Engine="hangman" OnDifficultyChange="OnHangmanDifficultyChanged" />
             }
             else if (CurrentGame is SnakeEngine snake)
             {
@@ -69,6 +69,11 @@
             {
                 await memory.Start(() => InvokeAsync(StateHasChanged));
             }
+            else if (CurrentGame is HangmanEngine hangman)
+            {
+                // Для Hangman НЕ вызываем Reset автоматически
+                // Пользователь сначала выбирает сложность
+            }
             else
             {
                 CurrentGame.Reset();
@@ -97,6 +102,14 @@
     private void GoBack()
     {
         Navigation.NavigateTo("/");
+    }
+
+    private void OnHangmanDifficultyChanged(HangmanDifficulty difficulty)
+    {
+        // Создаем новую игру с выбранной сложностью
+        CurrentGame = HangmanFactory.CreateGame(difficulty);
+        CurrentGame.Reset();
+        StateHasChanged();
     }
 }
 

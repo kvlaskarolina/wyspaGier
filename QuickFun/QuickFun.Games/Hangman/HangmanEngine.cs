@@ -14,7 +14,7 @@ namespace QuickFun.Games.Hangman
         public string WordToGuess { get; private set; } = string.Empty;
         public char[] CurrentGuess { get; private set; } = Array.Empty<char>();
         public int WrongAttempts { get; private set; }
-        public int MaxAttempts { get; private set; } = 6;
+        public int MaxAttempts { get; private set; } = 7;
         public bool IsGameOver { get; private set; }
         public string Message { get; private set; } = string.Empty;
 
@@ -74,7 +74,7 @@ namespace QuickFun.Games.Hangman
                 }
                 else
                 {
-                    Message = $"Nice! You got the word: {new string(CurrentGuess)}";
+                    Message = $"Nice! Letter found: {new string(CurrentGuess)}";
 
                 }
             }
@@ -86,7 +86,6 @@ namespace QuickFun.Games.Hangman
                     IsGameOver = true;
                     Score = 0;
                     Message = $"You lost! The word was: {WordToGuess}";
-;
                 }
                 else
                 {
@@ -105,6 +104,7 @@ namespace QuickFun.Games.Hangman
     4 => "      +---+\n      |   |\n      O   |\n     /|   |\n          |\n      ____|\n    =========",
     5 => "      +---+\n      |   |\n      O   |\n     /|\\  |\n          |\n      ____|\n    =========",
     6 => "      +---+\n      |   |\n      O   |\n     /|\\  |\n     /    |\n      ____|\n    =========",
+    7 => "      +---+\n      |   |\n      O   |\n     /|\\  |\n     / \\  |\n      ____|\n    =========",
     _ => "      +---+\n      |   |\n      O   |\n     /|\\  |\n     / \\  |\n      ____|\n    ========="
 };
     }

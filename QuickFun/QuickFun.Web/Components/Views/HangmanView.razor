@@ -36,27 +36,24 @@
 </div>
 
 @code {
-    [Parameter] 
+    [Parameter]
     public HangmanEngine? Engine { get; set; }
 
     private char[] letters = "abcdefghijklmnopqrstuvwxyz".ToCharArray();
-    private HashSet<char> UsedLetters = new HashSet<char>();
 
-    protected override void OnParametersSet()
+    private HashSet<char> UsedLetters
     {
-        if (Engine != null && Engine.GuessedLetters.Count == 0)
-        {
-            UsedLetters.Clear();
-        }
+        get => Engine?.GuessedLetters != null
+            ? new HashSet<char>(Engine.GuessedLetters)
+            : new HashSet<char>();
     }
 
     private void HandleGuess(char letter)
     {
         if (Engine == null || Engine.IsGameOver) return;
 
-        UsedLetters.Add(letter);
         Engine.MakeMove(letter);
-        
+
         StateHasChanged();
     }
 }

@@ -1,6 +1,7 @@
 using QuickFun.Domain.Enums;
 using QuickFun.Games.Engines;
 using QuickFun.Games.Memory;
+using QuickFun.Games.Hangman;
 
 namespace QuickFun.Games
 {
@@ -18,7 +19,8 @@ namespace QuickFun.Games
                 GameType.TicTacToe => new TicTacToeEngine(),
                 GameType.Memory => new MemoryEngine(),
                 GameType.Snake => new SnakeEngine(),
-                _ => throw new ArgumentException("Nieznana gra")
+                GameType.Hangman => HangmanFactory.CreateGame(),
+                _ => throw new ArgumentException("Nieznana gra") 
             };
         }
     }

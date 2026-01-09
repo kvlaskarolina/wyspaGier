@@ -1,6 +1,7 @@
 using QuickFun.Domain.Enums;
 using QuickFun.Games.Engines;
 using QuickFun.Games.Memory;
+using QuickFun.Games.Minesweeper;
 
 namespace QuickFun.Games
 {
@@ -17,6 +18,7 @@ namespace QuickFun.Games
             {
                 GameType.TicTacToe => new TicTacToeEngine(),
                 GameType.Memory => new MemoryEngine(),
+                GameType.Minesweeper => new MinesweeperEngine(new QuickFun.Games.Minesweeper.Strategies.DfsFloodingStrategy()),
                 GameType.Snake => new SnakeEngine(),
                 _ => throw new ArgumentException("Nieznana gra")
             };

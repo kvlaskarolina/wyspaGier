@@ -34,7 +34,7 @@
             <p class="score">Punkty: @Engine.Score</p>
 
             <button class="btn-change-level" @onclick="() => isDifficultySelected = false">
-                « Zmień poziom
+                <span>«</span> Zmień poziom
             </button>
         </div>
         @* DYNAMICZNY GRID: Liczba kolumn zależy od wybranej strategii *@
@@ -193,8 +193,29 @@ private async Task OnCardClick(MemoryCard card)
     }
 
     .btn-change-level {
-        display: inline-block;
-        margin-top: 8px;
+        background-color: #0086fc;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 4px;
+        font-weight: bold;
+        cursor: pointer;
+        font-size: 0.9rem;
+        transition: background-color 0.2s, transform 0.1s;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        text-decoration: none;
+    }
+
+    .btn-change-level:hover {
+        background-color: #5a6268;
+        transform: translateY(-1px);
+        text-decoration: none;
+    }
+
+    .btn-change-level:active {
+        transform: translateY(0);
     }
 
     .memory-view {

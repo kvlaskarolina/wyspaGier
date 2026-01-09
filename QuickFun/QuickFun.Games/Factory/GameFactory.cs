@@ -4,6 +4,7 @@ using QuickFun.Games.Memory;
 using Microsoft.Extensions.Http;
 using System.Net.Http;
 using QuickFun.Games.Engines.Sudoku;
+using QuickFun.Games.Minesweeper;
 
 namespace QuickFun.Games
 {
@@ -27,6 +28,7 @@ namespace QuickFun.Games
             {
                 GameType.TicTacToe => new TicTacToeEngine(),
                 GameType.Memory => new MemoryEngine(),
+                GameType.Minesweeper => new MinesweeperEngine(new QuickFun.Games.Minesweeper.Strategies.DfsFloodingStrategy()),
                 GameType.Snake => new SnakeEngine(),
                 GameType.Sudoku => new SudokuEngine(_httpClientFactory.CreateClient("SudokuApi")),
                 _ => throw new ArgumentException("Nieznana gra")

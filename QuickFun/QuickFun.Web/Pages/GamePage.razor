@@ -4,6 +4,7 @@
 @using QuickFun.Games
 @using QuickFun.Games.Engines
 @using QuickFun.Games.Memory
+@using QuickFun.Games.Minesweeper
 @using QuickFun.Web.Components.Views
 @using QuickFun.Games.Engines.Sudoku
 
@@ -35,6 +36,8 @@
             else if (CurrentGame is SudokuEngine sudoku)
             {
                 <SudokuView Engine="sudoku" />
+            else if (CurrentGame is MinesweeperEngine ms){
+                <MinesweeperView Engine="ms" />
             }
             else if (CurrentGame is SnakeEngine snake)
             {

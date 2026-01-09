@@ -6,6 +6,7 @@
 @using QuickFun.Games.Memory
 @using QuickFun.Games.Minesweeper
 @using QuickFun.Web.Components.Views
+@using QuickFun.Games.Engines.Sudoku
 
 @inject IGameFactory GameFactory
 @inject NavigationManager Navigation
@@ -26,12 +27,15 @@
         <div class="game-content">
             @if (CurrentGame is TicTacToeEngine ttt)
             {
-                @* Przekazujemy silnik do wydzielonego komponentu *@
                 <TicTacToeView Engine="ttt" />
             }
-            else if (CurrentGame is MemoryEngine memory){
+            else if (CurrentGame is MemoryEngine memory)
+            {
                 <MemoryView Engine="memory" />
             }
+            else if (CurrentGame is SudokuEngine sudoku)
+            {
+                <SudokuView Engine="sudoku" />
             else if (CurrentGame is MinesweeperEngine ms){
                 <MinesweeperView Engine="ms" />
             }
@@ -58,12 +62,10 @@
 
     private IGameEngine? CurrentGame { get; set; }
 
-    // OnParametersSet wykonuje się za każdym razem, gdy zmienia się URL (np. przechodzisz z /game/Snake na /game/TicTacToe)
     protected override async Task OnParametersSetAsync()
     {
         if (Enum.TryParse<GameType>(GameTypeString, true, out var type))
         {
-            // Fabryka tworzy nową instancję silnika gry
             CurrentGame = GameFactory.CreateGame(type);
         }
         else
@@ -75,13 +77,13 @@
     private async Task Reset()
     {
         if (CurrentGame == null) return;
-        
         CurrentGame.Reset();
 
         if (CurrentGame is MemoryEngine memory)
-        {
             await memory.Start(() => InvokeAsync(StateHasChanged));
-        }
+
+        if (CurrentGame is SudokuEngine sudoku)
+            await sudoku.Start(() => InvokeAsync(StateHasChanged));
     }
 
     private void GoBack()

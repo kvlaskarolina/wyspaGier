@@ -1,0 +1,129 @@
+@using QuickFun.Games.Engines.Sudoku
+@namespace QuickFun.Web.Components.Views
+
+<div class="sudoku-container">
+    @if (Engine.IsLoading)
+    {
+        <div class="loading-status">
+            <div class="spinner-border text-primary" role="status"></div>
+            <p>Haskell generuje Twoją planszę...</p>
+        </div>
+    }
+    else if (Engine.Board == null)
+    {
+        <div class="difficulty-selection">
+            <h3>Wybierz poziom trudności</h3>
+            <div class="difficulty-buttons">
+                <button class="btn btn-success" @onclick=@(() => SelectDifficulty("easy"))>Łatwy</button>
+                <button class="btn btn-warning" @onclick=@(() => SelectDifficulty("medium"))>Średni</button>
+                <button class="btn btn-danger" @onclick=@(() => SelectDifficulty("hard"))>Trudny</button>
+            </div>
+        </div>
+    }
+    else
+    {
+        <table class="sudoku-table">
+            @for (int r = 0; r < 9; r++)
+            {
+                <tr>
+                    @for (int c = 0; c < 9; c++)
+                    {
+                        int row = r; int col = c;
+                        bool isFixed = Engine.IsOriginal?[row][col] ?? false;
+
+                        <td class="@(isFixed ? "cell-fixed" : "cell-input")">
+                            @if (isFixed)
+                            {
+                                @Engine.Board[row][col]
+                            }
+                            else
+                            {
+                                <input type="number" min="1" max="9"
+                                    value="@(Engine.Board[row][col] == 0 ? "" : Engine.Board[row][col])"
+                                    @oninput="@((e) => HandleInput(row, col, e))" />
+                            }
+                        </td>
+                    }
+                </tr>
+            }
+        </table>
+        <button class="btn btn-secondary mt-3" @onclick="() => Engine.Reset()">Zmień trudność</button>
+    }
+</div>
+
+<style>
+    .sudoku-container {
+        text-align: center;
+        padding: 20px;
+    }
+
+    .sudoku-table {
+        border: 3px solid #333;
+        margin: auto;
+        border-collapse: collapse;
+    }
+
+    .sudoku-table td {
+        width: 45px;
+        height: 45px;
+        border: 1px solid #ccc;
+        padding: 0;
+    }
+
+    /* Sekcje 3x3 */
+    .sudoku-table td:nth-child(3n) {
+        border-right: 3px solid #333;
+    }
+
+    .sudoku-table tr:nth-child(3n) td {
+        border-bottom: 3px solid #333;
+    }
+
+    .cell-fixed {
+        background-color: #eee;
+        font-weight: bold;
+        font-size: 1.2rem;
+    }
+
+    .sudoku-table input {
+        width: 100%;
+        height: 100%;
+        border: none;
+        text-align: center;
+        font-size: 1.2rem;
+        background: transparent;
+        outline: none;
+    }
+
+    .sudoku-table input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+    }
+
+    .difficulty-buttons {
+        display: flex;
+        gap: 10px;
+        justify-content: center;
+        margin-top: 15px;
+    }
+</style>
+
+@code {
+    [Parameter] public SudokuEngine Engine { get; set; } = default!;
+
+    private async Task SelectDifficulty(string level)
+    {
+        await Engine.LoadBoard(level, () => InvokeAsync(StateHasChanged));
+    }
+
+    private void HandleInput(int r, int c, ChangeEventArgs e)
+    {
+        if (int.TryParse(e.Value?.ToString(), out int val))
+        {
+            if (val >= 1 && val <= 9) Engine.UpdateCell(r, c, val);
+        }
+        else
+        {
+            Engine.UpdateCell(r, c, 0);
+        }
+    }
+}

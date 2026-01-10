@@ -165,7 +165,7 @@ public class MinesweeperEngine : IGameEngine
         }
     }
 
-    private void GameOver(bool outcome)
+    private async void GameOver(bool outcome)
     {
         IsGameOver = true;
         IsWin = outcome;
@@ -178,15 +178,31 @@ public class MinesweeperEngine : IGameEngine
             Message = "take the L";
         }
 
-        for (int r = 0; r < _rows; r++)
+        if (outcome)
         {
-            for (int c = 0; c < _cols; c++)
+            for (int r = 0; r < _rows; r++)
             {
-                if (Board[r, c].IsMine)
+                for (int c = 0; c < _cols; c++)
                 {
-                    Board[r, c].IsRevealed = true;
+                    if (Board[r, c].IsMine && !Board[r, c].IsRevealed)
+                    {
+                        Board[r, c].IsRevealed = true;
+                        OnStateChanged?.Invoke();
+                        await Task.Delay(50);
+                    }
                 }
             }
+        }
+        else
+        {
+            for (int r = 0; r < _rows; r++)
+            {
+                for (int c = 0; c < _cols; c++)
+                {
+                    if (Board[r, c].IsMine) Board[r, c].IsRevealed = true;
+                }
+            }
+            OnStateChanged?.Invoke();
         }
     }
 

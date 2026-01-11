@@ -1,0 +1,202 @@
+@using QuickFun.Games.Minesweeper
+@namespace QuickFun.Web.Components.Views
+@implements IDisposable
+
+<div class="saper-container">
+    @* NAGŁÓWEK *@
+    <div class="saper-header">
+        <div class="status-box">
+            <span class="status-text @(Engine.IsWin ? "win-text" : Engine.IsGameOver ? "loss-text" : "")">
+                @Engine.Message
+            </span>
+        </div>
+        <div class="stats-bar">
+            <div class="stat-item">
+                <span class="label">PUNKTY</span>
+                <span class="value">@Engine.Score</span>
+            </div>
+            <div class="stat-item">
+                <span class="label">MINY</span>
+                <span class="value">20</span>
+            </div>
+        </div>
+    </div>
+
+    @* PLANSZA *@
+    <div class="saper-board">
+        @for (int r = 0; r < 12; r++)
+        {
+            <div class="saper-row">
+                @for (int c = 0; c < 12; c++)
+                {
+                    var row = r;
+                    var col = c;
+                    var cell = Engine.Board[row, col];
+
+                    <div class="saper-cell
+                        @(cell.IsRevealed ? "revealed" : "hidden")
+                        @((cell.IsMine && cell.IsRevealed && !Engine.IsWin) ? "mine-loss" : "")
+                        @((cell.IsMine && cell.IsRevealed && Engine.IsWin) ? "mine-win" : "")"
+                        @onclick="() => Engine.HandleClick(row, col)"
+                        @oncontextmenu:preventDefault="true"
+                        @oncontextmenu="() => Engine.SwitchFlag(row, col)">
+
+                        @if (cell.IsFlagged && !cell.IsRevealed)
+                        {
+                            <span class="flag">🚩</span>
+                        }
+                        else if (cell.IsRevealed)
+                        {
+                            if (cell.IsMine)
+                            {
+                                <span class="icon">@("💣")</span>
+                            }
+                            else if (cell.AdjMines > 0)
+                            {
+                                <span class="number n-@cell.AdjMines">@cell.AdjMines</span>
+                            }
+                        }
+                    </div>
+                }
+            </div>
+        }
+    </div>
+
+    @* STOPKA *@
+    @if (Engine.IsGameOver)
+    {
+        <div class="saper-footer">
+            <button class="btn-reset" @onclick="Engine.Reset">
+                🔄 ZAGRAJ PONOWNIE
+            </button>
+        </div>
+    }
+</div>
+
+@code {
+    [Parameter] public MinesweeperEngine Engine { get; set; } = default!;
+
+    protected override void OnInitialized()
+    {
+        Engine.OnStateChanged += HandleStateChanged;
+    }
+
+    private void HandleStateChanged()
+    {
+        // InvokeAsync jest kluczowe przy używaniu Task.Delay w silniku
+        InvokeAsync(StateHasChanged);
+    }
+
+    public void Dispose()
+    {
+        Engine.OnStateChanged -= HandleStateChanged;
+    }
+}
+
+<style>
+    .saper-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        background-color: #e0e0e0;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        user-select: none;
+        max-width: fit-content;
+        margin: 0 auto;
+    }
+
+    .saper-header {
+        width: 100%;
+        margin-bottom: 15px;
+        text-align: center;
+    }
+
+    .status-text {
+        font-size: 1.4rem;
+        font-weight: bold;
+        color: #2c3e50;
+        display: block;
+        margin-bottom: 10px;
+        min-height: 1.6em;
+        transition: transform 0.3s ease;
+    }
+
+    .win-text { color: #000000; transform: scale(1.1); }
+    .loss-text { color: #000000; }
+
+    .stats-bar {
+        display: flex;
+        justify-content: space-around;
+        background: #333;
+        color: #00ff00;
+        font-family: 'Courier New', Courier, monospace;
+        padding: 5px;
+        border-radius: 4px;
+        border: 2px inset #fff;
+    }
+
+    .stat-item { display: flex; flex-direction: column; }
+    .stat-item .label { font-size: 0.7rem; color: #aaa; }
+    .stat-item .value { font-size: 1.2rem; font-weight: bold; }
+
+    .saper-board {
+        border: 4px inset #ffffff;
+        background-color: #7b7b7b;
+        padding: 2px;
+    }
+
+    .saper-row { display: flex; }
+
+    .saper-cell {
+        width: 35px;
+        height: 35px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        font-size: 1.2rem;
+        cursor: pointer;
+        box-sizing: border-box;
+        transition: background-color 0.1s;
+    }
+
+    .hidden {
+        background-color: #bdbdbd;
+        border: 3px outset #ffffff;
+    }
+
+    .revealed {
+        background-color: #bdbdbd;
+        border: 1px solid #7b7b7b;
+    }
+
+    .mine-loss {
+        background-color: #ff3e3e !important;
+        border: 1px solid #b33939;
+    }
+
+    .mine-win {
+        background-color: #06a165 !important;
+        border: 1px solid #6c5ce7;
+    }
+
+    .n-1 { color: #0984e3; }
+    .n-2 { color: #00b894; }
+    .n-3 { color: #d63031; }
+    .n-4 { color: #6c5ce7; }
+    .n-5 { color: #e17055; }
+    .n-6 { color: #00cec9; }
+
+    .btn-reset {
+        padding: 10px 20px;
+        font-weight: bold;
+        background: #2c3e50;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        margin-top: 20px;
+    }
+</style>

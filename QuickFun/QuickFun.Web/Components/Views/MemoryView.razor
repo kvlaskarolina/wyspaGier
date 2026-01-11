@@ -32,6 +32,10 @@
         <div class="game-header">
             <p class="status-message">@Engine.Message</p>
             <p class="score">Punkty: @Engine.Score</p>
+
+            <button class="btn-change-level" @onclick="() => isDifficultySelected = false">
+                <span>«</span> Zmień poziom
+            </button>
         </div>
         @* DYNAMICZNY GRID: Liczba kolumn zależy od wybranej strategii *@
     <div class="board-memory" style="grid-template-columns: repeat(@Engine.Columns, 1fr);">
@@ -52,24 +56,16 @@
             </button>
         }
     </div>
-
-    <div class="view-footer">
-        <button class="btn-change-level" @onclick="() => isDifficultySelected = false">
-            « Zmień poziom
-        </button>
-    </div>
 }
 </div>
 @code {
 [Parameter] public MemoryEngine Engine { get; set; } = default!;
 private bool isDifficultySelected = false;
-// Metoda wywoływana po kliknięciu w przycisk poziomu trudności
 private async Task SelectDifficulty(IMemoryDifficultyStrategy strategy)
 {
     isDifficultySelected = true;
-    Engine.SetDifficulty(strategy); // Tu silnik generuje karty
-    
-    // Wywołujemy animację podglądu kart na starcie
+    Engine.SetDifficulty(strategy);
+
     await Engine.Start(() => InvokeAsync(StateHasChanged));
 }
 
@@ -96,11 +92,10 @@ private async Task OnCardClick(MemoryCard card)
 <style>
     .memory-view {
         width: 100%;
-        max-width: 500px; /* Zwiększone lekko dla trybu 6x6 */
+        max-width: 500px;
         margin: 0 auto;
     }
 
-    /* STYLE EKRANU WYBORU */
     .difficulty-overlay {
         text-align: center;
         padding: 20px;
@@ -131,11 +126,9 @@ private async Task OnCardClick(MemoryCard card)
     .medium { background-color: #f39c12; }
     .hard { background-color: #e74c3c; }
 
-    /* STYLE PLANSZY */
     .board-memory {
         display: grid;
-        /* grid-template-columns ustawiany liniowo w HTML */
-        gap: 8px; 
+        gap: 8px;
         justify-content: center;
         margin: 15px auto;
         padding: 5px;
@@ -192,5 +185,40 @@ private async Task OnCardClick(MemoryCard card)
         text-decoration: underline;
         cursor: pointer;
         font-size: 0.9rem;
+    }
+
+    .game-header {
+        text-align: center;
+        margin-bottom: 15px;
+    }
+
+    .btn-change-level {
+        background-color: #0086fc;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 4px;
+        font-weight: bold;
+        cursor: pointer;
+        font-size: 0.9rem;
+        transition: background-color 0.2s, transform 0.1s;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        text-decoration: none;
+    }
+
+    .btn-change-level:hover {
+        background-color: #5a6268;
+        transform: translateY(-1px);
+        text-decoration: none;
+    }
+
+    .btn-change-level:active {
+        transform: translateY(0);
+    }
+
+    .memory-view {
+        padding-bottom: 45px;
     }
 </style>

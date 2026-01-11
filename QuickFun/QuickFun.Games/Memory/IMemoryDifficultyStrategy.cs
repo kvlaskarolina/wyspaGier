@@ -19,8 +19,8 @@ public class EasyStrategyMemory : IMemoryDifficultyStrategy
 public class MediumStrategyMemory : IMemoryDifficultyStrategy
 {
     public string Name => "Średni";
-    public int Rows => 6;
-    public int Columns => 4;
+    public int Rows => 4;
+    public int Columns => 6;
     public int DelayMs => 6000;
 }
 

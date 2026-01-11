@@ -5,6 +5,9 @@ using Microsoft.Extensions.Http;
 using System.Net.Http;
 using QuickFun.Games.Engines.Sudoku;
 using QuickFun.Games.Minesweeper;
+using QuickFun.Games.Engines.TicTacToe;
+using QuickFun.Games.Engines.TicTacToe.AI;
+using QuickFun.Games.TicTacToe.Strategies;
 
 namespace QuickFun.Games
 {
@@ -26,6 +29,8 @@ namespace QuickFun.Games
         {
             return type switch
             {
+
+                GameType.TicTacToeWithAI => new TicTacToeEngineWithAI(),
                 GameType.TicTacToe => new TicTacToeEngine(),
                 GameType.Memory => new MemoryEngine(),
                 GameType.Minesweeper => new MinesweeperEngine(new QuickFun.Games.Minesweeper.Strategies.DfsFloodingStrategy()),

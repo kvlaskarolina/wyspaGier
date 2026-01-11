@@ -3,6 +3,8 @@
 @using QuickFun.Domain.Enums
 @using QuickFun.Games
 @using QuickFun.Games.Engines
+@using QuickFun.Games.Engines.TicTacToe.AI
+@using QuickFun.Games.Engines.TicTacToe
 @using QuickFun.Games.Memory
 @using QuickFun.Games.Minesweeper
 @using QuickFun.Web.Components.Views
@@ -25,7 +27,11 @@
         <h1 class="game-title">@CurrentGame.Name</h1>
 
         <div class="game-content">
-            @if (CurrentGame is TicTacToeEngine ttt)
+            @if (CurrentGame is TicTacToeEngineWithAI tttai)
+            {
+                <TicTacToeWithAIView Engine="tttai" />
+            }
+            else if (CurrentGame is TicTacToeEngine ttt)
             {
                 <TicTacToeView Engine="ttt" />
             }
@@ -40,14 +46,6 @@
             else if (CurrentGame is MinesweeperEngine ms)
             {
                 <MinesweeperView Engine="ms" />
-            }
-            else if (CurrentGame is SnakeEngine snake)
-            {
-                <div class="snake-placeholder">
-                    <h3>Gra Snake</h3>
-                    <p>Logika węża zostanie zaimplementowana wkrótce!</p>
-                    <p>Aktualny wynik: @snake.Score</p>
-                </div>
             }
         </div>
 

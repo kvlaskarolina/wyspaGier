@@ -45,7 +45,7 @@ namespace QuickFun.Games.Engines.TicTacToe.AI
             };
         }
 
-        public async Task MakeMove(int index)
+        public new async Task MakeMove(int index)
         {
             if (IsGameOver || index < 0 || index >= Board.Length || Board[index] != '\0')
                 return;

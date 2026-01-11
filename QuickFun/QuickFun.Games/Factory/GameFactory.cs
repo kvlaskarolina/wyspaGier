@@ -29,12 +29,13 @@ namespace QuickFun.Games
         {
             return type switch
             {
+
+                GameType.TicTacToeWithAI => new TicTacToeEngineWithAI(),
                 GameType.TicTacToe => new TicTacToeEngine(),
                 GameType.Memory => new MemoryEngine(),
                 GameType.Minesweeper => new MinesweeperEngine(new QuickFun.Games.Minesweeper.Strategies.DfsFloodingStrategy()),
                 GameType.Snake => new SnakeEngine(),
                 GameType.Sudoku => new SudokuEngine(_httpClientFactory.CreateClient("SudokuApi")),
-                GameType.TicTacToeWithAI => new TicTacToeEngineWithAI(),
                 _ => throw new ArgumentException("Nieznana gra")
             };
         }

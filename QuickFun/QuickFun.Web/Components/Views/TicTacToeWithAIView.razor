@@ -9,10 +9,16 @@
 @namespace QuickFun.Web.Components.Views
 
 <div class="game-container">
-    <div class="difficulty-selector">
-        <button class=btn @onclick="() => SetDifficulty(Level.Easy)">Łatwy</button>
-        <button class=btn @onclick="() => SetDifficulty(Level.Medium)">Średni</button>
-        <button class=btn @onclick="() => SetDifficulty(Level.Hard)">Trudny</button>
+    <div class="difficulty-buttons">
+        <button class="btn-diff easy" @onclick="() => SetDifficulty(Level.Easy)">
+            Łatwy
+        </button>
+        <button class="btn-diff medium" @onclick="() => SetDifficulty(Level.Medium)">
+            Średni
+        </button>
+        <button class="btn-diff hard" @onclick="() => SetDifficulty(Level.Hard)">
+            Trudny
+        </button>
     </div>
 
     <p class="status-message">@Engine.Message</p>
@@ -22,7 +28,7 @@
         @for (int i = 0; i < 9; i++)
         {
             int index = i;
-            <button class="cell" @onclick="() => Engine.MakeMove(index)"
+            <button class="cell" @onclick="async () => await Engine.MakeMove(index)"
                 disabled="@(Engine.IsGameOver || Engine.Board[index] != '\0')">
                 @Engine.Board[index]
             </button>
@@ -70,6 +76,40 @@
         justify-content: center;
         align-items: center;
     }
+
+    .btn-diff {
+        padding: 15px;
+        border: none;
+        border-radius: 8px;
+        font-weight: bold;
+        color: white;
+        cursor: pointer;
+        transition: transform 0.2s;
+        font-size: 1.1rem;
+    }
+
+    .btn-diff:hover {
+        transform: scale(1.02);
+    }
+
+    .btn-diff small {
+        display: block;
+        font-weight: normal;
+        opacity: 0.8;
+    }
+
+    .easy {
+        background-color: #27ae60;
+    }
+
+    .medium {
+        background-color: #f39c12;
+    }
+
+    .hard {
+        background-color: #e74c3c;
+    }
+
 
     .cell {
         width: 100px;

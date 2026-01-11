@@ -10,13 +10,16 @@
 
 <div class="game-container">
     <div class="difficulty-buttons">
-        <button class="btn-diff easy" @onclick="() => SetDifficulty(Level.Easy)">
+        <button class="btn-diff easy @(selectedLevel == Level.Easy ? "active" : "")"
+            @onclick="() => SetDifficulty(Level.Easy)">
             Łatwy
         </button>
-        <button class="btn-diff medium" @onclick="() => SetDifficulty(Level.Medium)">
+        <button class="btn-diff medium @(selectedLevel == Level.Medium ? "active" : "")"
+            @onclick="() => SetDifficulty(Level.Medium)">
             Średni
         </button>
-        <button class="btn-diff hard" @onclick="() => SetDifficulty(Level.Hard)">
+        <button class="btn-diff hard @(selectedLevel == Level.Hard ? "active" : "")"
+            @onclick="() => SetDifficulty(Level.Hard)">
             Trudny
         </button>
     </div>
@@ -39,10 +42,12 @@
 @code {
     [Parameter]
     public TicTacToeEngineWithAI Engine { get; set; }
+    private Level selectedLevel = Level.Medium;
 
     private void SetDifficulty(Level level)
     {
         Engine.SetDifficulty(level);
+        selectedLevel = level;
         ResetGame();
     }
 
@@ -88,14 +93,12 @@
         font-size: 1.1rem;
     }
 
-    .btn-diff:hover {
-        transform: scale(1.02);
+    .btn-diff.active {
+        outline: 4px solid #333;
     }
 
-    .btn-diff small {
-        display: block;
-        font-weight: normal;
-        opacity: 0.8;
+    .btn-diff:hover {
+        transform: scale(1.02);
     }
 
     .easy {

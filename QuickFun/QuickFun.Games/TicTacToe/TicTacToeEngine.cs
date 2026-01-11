@@ -1,6 +1,6 @@
 using QuickFun.Domain.Enums;
 
-namespace QuickFun.Games.Engines
+namespace QuickFun.Games.Engines.TicTacToe
 {
     public class TicTacToeEngine : IGameEngine
     {

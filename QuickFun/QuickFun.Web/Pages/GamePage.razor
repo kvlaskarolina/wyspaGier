@@ -3,6 +3,8 @@
 @using QuickFun.Domain.Enums
 @using QuickFun.Games
 @using QuickFun.Games.Engines
+@using QuickFun.Games.Engines.TicTacToe.AI
+@using QuickFun.Games.Engines.TicTacToe
 @using QuickFun.Games.Memory
 @using QuickFun.Games.Minesweeper
 @using QuickFun.Web.Components.Views
@@ -29,6 +31,10 @@
             {
                 <TicTacToeView Engine="ttt" />
             }
+            else if (CurrentGame is TicTacToeEngineWithAI tttai)
+            {
+                <TicTacToeWithAIView Engine="tttai" />
+            }
             else if (CurrentGame is MemoryEngine memory)
             {
                 <MemoryView Engine="memory" />
@@ -40,14 +46,6 @@
             else if (CurrentGame is MinesweeperEngine ms)
             {
                 <MinesweeperView Engine="ms" />
-            }
-            else if (CurrentGame is SnakeEngine snake)
-            {
-                <div class="snake-placeholder">
-                    <h3>Gra Snake</h3>
-                    <p>Logika węża zostanie zaimplementowana wkrótce!</p>
-                    <p>Aktualny wynik: @snake.Score</p>
-                </div>
             }
         </div>
 
@@ -64,8 +62,6 @@
 
     private IGameEngine? CurrentGame { get; set; }
 
-    // OnParametersSet wykonuje się za każdym razem, gdy zmienia się URL (np. przechodzisz z /game/Snake na /game/TicTacToe)
-    protected override void OnParametersSet()
     protected override async Task OnParametersSetAsync()
     {
         if (Enum.TryParse<GameType>(GameTypeString, true, out var type))
@@ -78,9 +74,8 @@
         }
     }
 
-    private void Reset()
+    private async Task Reset()
     {
-        CurrentGame?.Reset();
         if (CurrentGame == null) return;
         CurrentGame.Reset();
 

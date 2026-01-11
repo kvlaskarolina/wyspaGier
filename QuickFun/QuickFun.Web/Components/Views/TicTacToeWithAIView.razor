@@ -1,50 +1,50 @@
-@page "/tictactoe"
 @using QuickFun.Games.Engines
+@using QuickFun.Domain.Enums
+@using QuickFun.Application.Interfaces
+@using QuickFun.Domain.Entities
 @using QuickFun.Games.TicTacToe.Strategies
-<div class="game-layout">
-    <h3>Tic Tac Toe vs AI</h3>
+@using QuickFun.Games.Engines.TicTacToe.AI
+@inject IGameSessionService SessionService
 
+@namespace QuickFun.Web.Components.Views
+
+<div class="game-container">
     <div class="difficulty-selector">
         <button class=btn @onclick="() => SetDifficulty(Level.Easy)">Łatwy</button>
         <button class=btn @onclick="() => SetDifficulty(Level.Medium)">Średni</button>
         <button class=btn @onclick="() => SetDifficulty(Level.Hard)">Trudny</button>
     </div>
 
-    <p class="status-message">@engine.Message</p>
+    <p class="status-message">@Engine.Message</p>
 
 
     <div class="board">
         @for (int i = 0; i < 9; i++)
         {
             int index = i;
-            <button class="cell" @onclick="() => engine.MakeMove(index)"
-                disabled="@(engine.IsGameOver || engine.Board[index] != '\0')">
-                @engine.Board[index]
+            <button class="cell" @onclick="() => Engine.MakeMove(index)"
+                disabled="@(Engine.IsGameOver || Engine.Board[index] != '\0')">
+                @Engine.Board[index]
             </button>
         }
     </div>
 </div>
 
-@if (engine.IsGameOver)
-{
-    <button @onclick="ResetGame">Nowa gra</button>
-}
-
 @code {
-    private TicTacToeEngineWithAI engine = new();
+    [Parameter]
+    public TicTacToeEngineWithAI Engine { get; set; }
 
     private void SetDifficulty(Level level)
     {
-        engine.SetDifficulty(level);
+        Engine.SetDifficulty(level);
         ResetGame();
     }
 
     private void ResetGame()
     {
-        engine.ResetGame();
+        Engine.ResetGame();
     }
 }
-
 <style>
     .game-layout {
         max-width: 600px;

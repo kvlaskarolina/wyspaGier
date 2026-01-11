@@ -6,6 +6,7 @@ namespace QuickFun.Domain.Enums
         Snake,
         Memory,
         Sudoku,
-        Minesweeper
+        Minesweeper,
+        TicTacToeWithAI
     }
 }

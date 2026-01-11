@@ -3,7 +3,7 @@ using QuickFun.Domain.Enums;
 using QuickFun.Games.Engines;
 using System.Reflection;
 
-namespace QuickFun.Games.Engines
+namespace QuickFun.Games.Engines.TicTacToe.AI
 {
 
     public class TicTacToeEngineWithAI : TicTacToeEngine

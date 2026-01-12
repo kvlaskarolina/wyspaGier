@@ -37,7 +37,6 @@ namespace QuickFun.Games
                 GameType.Minesweeper => new MinesweeperEngine(new QuickFun.Games.Minesweeper.Strategies.DfsFloodingStrategy()),
                 GameType.Snake => new SnakeEngine(),
                 GameType.Hangman => HangmanFactory.CreateGame(),
-                _ => throw new ArgumentException("Nieznana gra") 
                 GameType.Sudoku => new SudokuEngine(_httpClientFactory.CreateClient("SudokuApi")),
                 _ => throw new ArgumentException("Nieznana gra")
             };

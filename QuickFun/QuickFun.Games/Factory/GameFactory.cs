@@ -1,6 +1,7 @@
 using QuickFun.Domain.Enums;
 using QuickFun.Games.Engines;
 using QuickFun.Games.Memory;
+using QuickFun.Games.Hangman;
 using Microsoft.Extensions.Http;
 using System.Net.Http;
 using QuickFun.Games.Engines.Sudoku;
@@ -35,6 +36,8 @@ namespace QuickFun.Games
                 GameType.Memory => new MemoryEngine(),
                 GameType.Minesweeper => new MinesweeperEngine(new QuickFun.Games.Minesweeper.Strategies.DfsFloodingStrategy()),
                 GameType.Snake => new SnakeEngine(),
+                GameType.Hangman => HangmanFactory.CreateGame(),
+                _ => throw new ArgumentException("Nieznana gra") 
                 GameType.Sudoku => new SudokuEngine(_httpClientFactory.CreateClient("SudokuApi")),
                 _ => throw new ArgumentException("Nieznana gra")
             };

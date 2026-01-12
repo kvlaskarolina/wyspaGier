@@ -3,9 +3,13 @@
 @using QuickFun.Domain.Enums
 @using QuickFun.Games
 @using QuickFun.Games.Engines
+@using QuickFun.Games.Engines.TicTacToe.AI
+@using QuickFun.Games.Engines.TicTacToe
 @using QuickFun.Games.Memory
 @using QuickFun.Games.Hangman
+@using QuickFun.Games.Minesweeper
 @using QuickFun.Web.Components.Views
+@using QuickFun.Games.Engines.Sudoku
 
 @inject IGameFactory GameFactory
 @inject NavigationManager Navigation
@@ -24,7 +28,11 @@
         <h1 class="game-title">@CurrentGame.Name</h1>
 
         <div class="game-content">
-            @if (CurrentGame is TicTacToeEngine ttt)
+            @if (CurrentGame is TicTacToeEngineWithAI tttai)
+            {
+                <TicTacToeWithAIView Engine="tttai" />
+            }
+            else if (CurrentGame is TicTacToeEngine ttt)
             {
                 <TicTacToeView Engine="ttt" />
             }
@@ -37,12 +45,13 @@
                 <HangmanView Engine="hangman" OnDifficultyChange="OnHangmanDifficultyChanged" />
             }
             else if (CurrentGame is SnakeEngine snake)
+            else if (CurrentGame is SudokuEngine sudoku)
             {
-                <div class="snake-placeholder">
-                    <h3>Gra Snake</h3>
-                    <p>Logika węża zostanie zaimplementowana wkrótce!</p>
-                    <p>Aktualny wynik: @snake.Score</p>
-                </div>
+                <SudokuView Engine="sudoku" />
+            }
+            else if (CurrentGame is MinesweeperEngine ms)
+            {
+                <MinesweeperView Engine="ms" />
             }
         </div>
 
@@ -85,19 +94,19 @@
         }
     }
 
-    private async Task Reset()
-    {
-        if (CurrentGame == null) return;
-        
-        CurrentGame.Reset();
+   private async Task Reset()
+  {
+      if (CurrentGame == null) return;
+      CurrentGame.Reset();
 
-        if (CurrentGame is MemoryEngine memory)
-        {
-            await memory.Start(() => InvokeAsync(StateHasChanged));
-        }
-        
-        StateHasChanged();
-    }
+      if (CurrentGame is MemoryEngine memory)
+          await memory.Start(() => InvokeAsync(StateHasChanged));
+
+      if (CurrentGame is SudokuEngine sudoku)
+          await sudoku.Start(() => InvokeAsync(StateHasChanged));
+
+      StateHasChanged();
+  }
 
     private void GoBack()
     {

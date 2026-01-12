@@ -1,0 +1,188 @@
+@using QuickFun.Games.Engines
+@using QuickFun.Domain.Enums
+@using QuickFun.Application.Interfaces
+@using QuickFun.Domain.Entities
+@using QuickFun.Games.TicTacToe.Strategies
+@using QuickFun.Games.Engines.TicTacToe.AI
+@inject IGameSessionService SessionService
+
+@namespace QuickFun.Web.Components.Views
+
+<div class="game-container">
+    <div class="difficulty-buttons">
+        <button class="btn-diff easy @(selectedLevel == Level.Easy ? "active" : "")"
+            @onclick="() => SetDifficulty(Level.Easy)">
+            Łatwy
+        </button>
+        <button class="btn-diff medium @(selectedLevel == Level.Medium ? "active" : "")"
+            @onclick="() => SetDifficulty(Level.Medium)">
+            Średni
+        </button>
+        <button class="btn-diff hard @(selectedLevel == Level.Hard ? "active" : "")"
+            @onclick="() => SetDifficulty(Level.Hard)">
+            Trudny
+        </button>
+    </div>
+
+    <p class="status-message">@Engine.Message</p>
+
+
+    <div class="board">
+        @for (int i = 0; i < 9; i++)
+        {
+            int index = i;
+            <button class="cell" @onclick="async () => await Engine.MakeMove(index)"
+                disabled="@(Engine.IsGameOver || Engine.Board[index] != '\0')">
+                @Engine.Board[index]
+            </button>
+        }
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public TicTacToeEngineWithAI Engine { get; set; }
+    private Level selectedLevel = Level.Medium;
+
+    private void SetDifficulty(Level level)
+    {
+        Engine.SetDifficulty(level);
+        selectedLevel = level;
+        ResetGame();
+    }
+
+    private void ResetGame()
+    {
+        Engine.ResetGame();
+    }
+}
+<style>
+    .game-layout {
+        max-width: 600px;
+        margin: 2rem auto;
+        padding: 20px;
+        text-align: center;
+        background-color: #ffffff;
+        border-radius: 15px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .game-title {
+        color: #333;
+        margin-bottom: 1.5rem;
+        font-size: 2.5rem;
+    }
+
+    .game-content {
+        margin: 2rem 0;
+        min-height: 300px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .btn-diff {
+        padding: 15px;
+        border: none;
+        border-radius: 8px;
+        font-weight: bold;
+        color: white;
+        cursor: pointer;
+        transition: transform 0.2s;
+        font-size: 1.1rem;
+    }
+
+    .btn-diff.active {
+        outline: 4px solid #333;
+    }
+
+    .btn-diff:hover {
+        transform: scale(1.02);
+    }
+
+    .easy {
+        background-color: #27ae60;
+    }
+
+    .medium {
+        background-color: #f39c12;
+    }
+
+    .hard {
+        background-color: #e74c3c;
+    }
+
+
+    .cell {
+        width: 100px;
+        height: 100px;
+        font-size: 2.5rem;
+        font-weight: bold;
+        cursor: pointer;
+        background: #f0f0f0;
+        border: 2px solid #ccc;
+        border-radius: 8px;
+    }
+
+    .status-message {
+        font-size: 1.5rem;
+        color: #333;
+        height: 2rem;
+        text-align: center;
+    }
+
+    .board {
+        display: grid;
+        grid-template-columns: repeat(3, 100px);
+        gap: 10px;
+        justify-content: center;
+        margin: 20px auto;
+    }
+
+    .controls {
+        display: flex;
+        gap: 15px;
+        justify-content: center;
+        margin-top: 2rem;
+    }
+
+    .btn {
+        padding: 12px 25px;
+        border-radius: 8px;
+        border: none;
+        font-weight: bold;
+        cursor: pointer;
+        transition: transform 0.1s, background-color 0.2s;
+    }
+
+    .btn:active {
+        transform: scale(0.95);
+    }
+
+    .btn-primary {
+        background-color: #28a745;
+        color: white;
+    }
+
+    .btn-primary:hover {
+        background-color: #218838;
+    }
+
+    .btn-secondary {
+        background-color: #6c757d;
+        color: white;
+        text-decoration: none;
+    }
+
+    .btn-secondary:hover {
+        background-color: #5a6268;
+    }
+
+    .snake-placeholder {
+        padding: 40px;
+        background-color: #e9ecef;
+        border-radius: 10px;
+        border: 2px dashed #adb5bd;
+    }
+</style>

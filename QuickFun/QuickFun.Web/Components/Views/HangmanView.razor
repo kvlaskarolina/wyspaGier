@@ -1,0 +1,244 @@
+@using QuickFun.Games.Hangman
+@namespace QuickFun.Web.Components.Views
+
+<div class="hangman-container">
+    @if (Engine == null)
+    {
+        <p>Ładowanie gry...</p>
+    }
+    else
+    {
+        <div class="difficulty-selector">
+            <label>Difficulty:</label>
+            <select @onchange="OnDifficultyChanged" disabled="@(Engine.WordToGuess != string.Empty && !Engine.IsGameOver)">
+                <option value="@HangmanDifficulty.Easy" selected="@(Engine.Difficulty == HangmanDifficulty.Easy)">
+                    Easy (10 tries, short words)
+                </option>
+                <option value="@HangmanDifficulty.Medium" selected="@(Engine.Difficulty == HangmanDifficulty.Medium)">
+                    Medium (7 tries, medium words)
+                </option>
+                <option value="@HangmanDifficulty.Hard" selected="@(Engine.Difficulty == HangmanDifficulty.Hard)">
+                    Hard (5 tries, long words)
+                </option>
+            </select>
+
+            @if (Engine.WordToGuess == string.Empty)
+            {
+                <button class="btn-start" @onclick="StartGame">Start Game</button>
+            }
+        </div>
+
+        <div class="game-info">
+            <span class="info-badge">Difficulty: <strong>@Engine.Difficulty</strong></span>
+            <span class="info-badge">Attempts: <strong>@(Engine.MaxAttempts - Engine.WrongAttempts) / @Engine.MaxAttempts</strong></span>
+            <span class="info-badge state-badge">State: <strong>@Engine.GetCurrentStateName()</strong></span>
+        </div>
+
+        <div class="hangman-box">
+            <pre class="hangman-picture">@Engine.HangmanPicture</pre>
+        </div>
+
+        <p class="status-msg">@Engine.Message</p>
+
+        <div class="word-display">
+            @foreach (var c in Engine.CurrentGuess)
+            {
+                <span class="letter-box">@c</span>
+            }
+        </div>
+
+        <div class="letters-grid">
+            @foreach (var letter in letters)
+            {
+                var l = letter;
+                <button class="btn-letter"
+                        @onclick="() => HandleGuess(l)"
+                        disabled="@(UsedLetters.Contains(l) || Engine.IsGameOver)">
+                    @l
+                </button>
+            }
+        </div>
+    }
+</div>
+
+@code {
+    [Parameter]
+    public HangmanEngine? Engine { get; set; }
+
+    [Parameter]
+    public EventCallback<HangmanDifficulty> OnDifficultyChange { get; set; }
+
+    private char[] letters = "abcdefghijklmnopqrstuvwxyz".ToCharArray();
+
+    private HashSet<char> UsedLetters
+    {
+        get => Engine?.GuessedLetters != null
+            ? new HashSet<char>(Engine.GuessedLetters)
+            : new HashSet<char>();
+    }
+
+    private async Task OnDifficultyChanged(ChangeEventArgs e)
+    {
+        if (Enum.TryParse<HangmanDifficulty>(e.Value?.ToString(), out var difficulty))
+        {
+            await OnDifficultyChange.InvokeAsync(difficulty);
+        }
+    }
+
+    private void StartGame()
+    {
+        if (Engine == null) return;
+        Engine.Reset();
+        StateHasChanged();
+    }
+
+    private void HandleGuess(char letter)
+    {
+        if (Engine == null || Engine.IsGameOver) return;
+
+        Engine.MakeMove(letter);
+
+        StateHasChanged();
+    }
+}
+
+<style>
+    .hangman-container {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .difficulty-selector {
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .difficulty-selector label {
+        font-weight: bold;
+        font-size: 1.1rem;
+    }
+
+    .difficulty-selector select {
+        padding: 8px 15px;
+        font-size: 1rem;
+        border: 2px solid #ccc;
+        border-radius: 6px;
+        background: white;
+        cursor: pointer;
+    }
+
+    .difficulty-selector select:disabled {
+        cursor: not-allowed;
+        opacity: 0.6;
+    }
+
+    .btn-start {
+        padding: 10px 20px;
+        font-size: 1rem;
+        font-weight: bold;
+        background: #28a745;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: background 0.2s;
+    }
+
+    .btn-start:hover {
+        background: #218838;
+    }
+
+    .game-info {
+        display: flex;
+        gap: 15px;
+        margin-bottom: 20px;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .info-badge {
+        background: #f0f0f0;
+        padding: 8px 15px;
+        border-radius: 20px;
+        font-size: 0.95rem;
+        border: 2px solid #ddd;
+    }
+
+    .state-badge {
+        background: #e3f2fd;
+        border-color: #2196f3;
+    }
+
+    .info-badge strong {
+        color: #333;
+    }
+
+    .hangman-picture {
+        font-family: 'Courier New', monospace;
+        font-size: 1.2rem;
+        line-height: 1.1;
+        background: #222;
+        color: #0f0;
+        padding: 20px;
+        border-radius: 8px;
+        white-space: pre;
+        text-align: left;
+        border: 2px solid #ccc;
+    }
+
+    .status-msg {
+        font-size: 1.2rem;
+        margin: 15px 0;
+        min-height: 1.5rem;
+        color: #444;
+        font-weight: 500;
+    }
+
+    .word-display {
+        margin-bottom: 30px;
+    }
+
+    .letter-box {
+        font-size: 2.2rem;
+        margin: 0 5px;
+        display: inline-block;
+        width: 1.2em;
+        border-bottom: 3px solid #ccc;
+        text-transform: uppercase;
+        font-weight: bold;
+    }
+
+    .letters-grid {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 8px;
+        max-width: 500px;
+    }
+
+    .btn-letter {
+        width: 40px;
+        height: 40px;
+        font-size: 1.1rem;
+        font-weight: bold;
+        background: #f0f0f0;
+        border: 2px solid #ccc;
+        border-radius: 6px;
+        cursor: pointer;
+        text-transform: uppercase;
+        transition: background 0.2s;
+    }
+
+    .btn-letter:hover:not(:disabled) {
+        background: #e0e0e0;
+    }
+
+    .btn-letter:disabled {
+        opacity: 0.3;
+        cursor: not-allowed;
+    }
+</style>

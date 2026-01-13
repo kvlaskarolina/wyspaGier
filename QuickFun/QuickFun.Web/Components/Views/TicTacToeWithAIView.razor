@@ -12,15 +12,15 @@
     <div class="difficulty-buttons">
         <button class="btn-diff easy @(selectedLevel == Level.Easy ? "active" : "")"
             @onclick="() => SetDifficulty(Level.Easy)">
-            Łatwy
+            Easy
         </button>
         <button class="btn-diff medium @(selectedLevel == Level.Medium ? "active" : "")"
             @onclick="() => SetDifficulty(Level.Medium)">
-            Średni
+            Medium
         </button>
         <button class="btn-diff hard @(selectedLevel == Level.Hard ? "active" : "")"
             @onclick="() => SetDifficulty(Level.Hard)">
-            Trudny
+            Hard
         </button>
     </div>
 

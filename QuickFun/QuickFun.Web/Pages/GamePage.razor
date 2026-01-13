@@ -18,9 +18,9 @@
     @if (CurrentGame == null)
     {
         <div class="error-container">
-            <h2>Nie znaleziono gry</h2>
-            <p>Przepraszamy, ale gra "@GameTypeString" nie istnieje lub nie została jeszcze zaimplementowana.</p>
-            <a href="/" class="btn btn-secondary">Wróć do menu</a>
+            <h2>Game not found</h2>
+            <p>we are sorry:(, game "@GameTypeString" does not exists</p>
+            <a href="/" class="btn btn-secondary">Go back to QUICKFUN</a>
         </div>
     }
     else
@@ -55,8 +55,8 @@
         </div>
 
         <div class="controls">
-            <button class="btn btn-primary" @onclick="Reset">Restart gry</button>
-            <button class="btn btn-secondary" @onclick="GoBack">Powrót do wyspy gier</button>
+            <button class="btn btn-primary" @onclick="Reset">Restart</button>
+            <button class="btn btn-secondary" @onclick="GoBack">Go back to QUICKFUN</button>
         </div>
     }
 </div>
@@ -114,7 +114,6 @@
 
     private void OnHangmanDifficultyChanged(HangmanDifficulty difficulty)
     {
-        // Создаем новую игру с выбранной сложностью
         CurrentGame = HangmanFactory.CreateGame(difficulty);
         CurrentGame.Reset();
         StateHasChanged();

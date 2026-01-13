@@ -28,7 +28,7 @@ public class MinesweeperEngine : IGameEngine
     public MinesweeperCell[,] Board { get; private set; }
     public bool IsGameOver { get; private set; }
     public bool IsWin { get; private set; }
-    public string Message { get; private set; } = "Powodzenia!";
+    public string Message { get; private set; } = "GLHF!";
 
 
     private readonly IMinesweeperFloodingStrategy _strategy;
@@ -49,7 +49,7 @@ public class MinesweeperEngine : IGameEngine
         {
             for (int c = 0; c < _cols; c++)
             {
-                Board[r, c] = new MinesweeperCell{R = r, C = c};
+                Board[r, c] = new MinesweeperCell { R = r, C = c };
             }
         }
 
@@ -57,7 +57,7 @@ public class MinesweeperEngine : IGameEngine
         IsGameOver = false;
         IsWin = false;
         Score = 0;
-        Message = "Powodzenia!";
+        Message = "GLHF!";
         OnStateChanged?.Invoke();
     }
 

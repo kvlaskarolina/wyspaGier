@@ -54,7 +54,7 @@ namespace QuickFun.Games.Engines.TicTacToe.AI
 
             if (CheckWinner())
             {
-                Message = "Wygrałeś!";
+                Message = "You WON!";
                 IsGameOver = true;
                 Score = 1;
                 return;
@@ -62,7 +62,7 @@ namespace QuickFun.Games.Engines.TicTacToe.AI
 
             if (IsBoardFull())
             {
-                Message = "Remis!";
+                Message = "DRAW!";
                 IsGameOver = true;
                 Score = 0;
                 return;
@@ -80,7 +80,7 @@ namespace QuickFun.Games.Engines.TicTacToe.AI
 
                 if (CheckWinner())
                 {
-                    Message = "Przegrałeś!";
+                    Message = "TAKE THE L LOOSER!";
                     IsGameOver = true;
                     Score = -1;
                     return;
@@ -88,7 +88,7 @@ namespace QuickFun.Games.Engines.TicTacToe.AI
 
                 if (IsBoardFull())
                 {
-                    Message = "Remis!";
+                    Message = "DRAW!";
                     IsGameOver = true;
                     Score = 0;
                     return;

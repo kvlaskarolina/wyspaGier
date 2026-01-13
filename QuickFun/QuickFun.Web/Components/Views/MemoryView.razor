@@ -12,16 +12,16 @@
     {
         @* EKRAN WYBORU POZIOMU *@
         <div class="difficulty-overlay">
-            <h3>Wybierz poziom trudności</h3>
+            <h3>Choose difficulty</h3>
             <div class="difficulty-buttons">
                 <button class="btn-diff easy" @onclick="() => SelectDifficulty(new EasyStrategyMemory())">
-                    Łatwy <small>(4x4)</small>
+                    easy <small>(4x4)</small>
                 </button>
                 <button class="btn-diff medium" @onclick="() => SelectDifficulty(new MediumStrategyMemory())">
-                    Średni <small>(6x4)</small>
+                    medium <small>(6x4)</small>
                 </button>
                 <button class="btn-diff hard" @onclick="() => SelectDifficulty(new HardStrategyMemory())">
-                    Trudny <small>(6x6)</small>
+                    hard <small>(6x6)</small>
                 </button>
             </div>
         </div>
@@ -31,10 +31,10 @@
         @* WIDOK GRY *@
         <div class="game-header">
             <p class="status-message">@Engine.Message</p>
-            <p class="score">Punkty: @Engine.Score</p>
+            <p class="score">Points: @Engine.Score</p>
 
             <button class="btn-change-level" @onclick="() => isDifficultySelected = false">
-                <span>«</span> Zmień poziom
+                <span>«</span> change difficulty
             </button>
         </div>
         @* DYNAMICZNY GRID: Liczba kolumn zależy od wybranej strategii *@

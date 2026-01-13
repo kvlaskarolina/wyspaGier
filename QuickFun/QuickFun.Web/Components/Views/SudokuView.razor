@@ -6,17 +6,17 @@
     {
         <div class="loading-status">
             <div class="spinner-border text-primary" role="status"></div>
-            <p>Haskell generuje Twoją planszę...</p>
+            <p>Generating...</p>
         </div>
     }
     else if (Engine.Board == null)
     {
         <div class="difficulty-selection">
-            <h3>Wybierz poziom trudności</h3>
+            <h3>Choose difficulty</h3>
             <div class="difficulty-buttons">
-                <button class="btn btn-success" @onclick=@(() => SelectDifficulty("easy"))>Łatwy</button>
-                <button class="btn btn-warning" @onclick=@(() => SelectDifficulty("medium"))>Średni</button>
-                <button class="btn btn-danger" @onclick=@(() => SelectDifficulty("hard"))>Trudny</button>
+                <button class="btn btn-success" @onclick=@(() => SelectDifficulty("easy"))>Easy</button>
+                <button class="btn btn-warning" @onclick=@(() => SelectDifficulty("medium"))>Medium</button>
+                <button class="btn btn-danger" @onclick=@(() => SelectDifficulty("hard"))>Hard</button>
             </div>
         </div>
     }

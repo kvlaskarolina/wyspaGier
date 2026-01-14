@@ -24,7 +24,7 @@ public class MemoryEngine : IGameEngine
     public string Name => "Memory";
     public int Score { get; private set; } = 0;
     public List<MemoryCard> Cards { get; private set; } = new();
-    public string Message { get; private set; } = "Wybierz poziom trudności";
+    public string Message { get; private set; } = "Choose difficulty";
     public bool IsGameOver { get; private set; } = false;
     private CancellationTokenSource? _startCts;
 
@@ -55,7 +55,7 @@ public class MemoryEngine : IGameEngine
     {
         if (_strategy == null) return;
         ResetState();
-        Message = "Znajdź pary obrazków";
+        Message = "Find pairs";
         InitializeGame();
     }
 
@@ -101,7 +101,7 @@ public class MemoryEngine : IGameEngine
         try
         {
             _isBusy = true;
-            Message = $"Zapamiętaj układ!";
+            Message = $"Remember the arrangement!";
             
             foreach (var card in Cards) card.IsRevealed = true;
             await onStateChanged();
@@ -109,7 +109,7 @@ public class MemoryEngine : IGameEngine
             await Task.Delay(_strategy.DelayMs, token);
 
             foreach (var card in Cards) card.IsRevealed = false;
-            Message = "Zaczynamy! Szukaj par.";
+            Message = "Let's start! Find all pairs";
             _isBusy = false;
             await onStateChanged();
         }
@@ -133,7 +133,7 @@ public class MemoryEngine : IGameEngine
         if (_firstCard == null)
         {
             _firstCard = clicked;
-            Message = "Wybierz drugą kartę";
+            Message = "Choose second card";
         }
         else
         {
@@ -150,11 +150,11 @@ public class MemoryEngine : IGameEngine
             _firstCard.IsMatched = true;
             _secondCard.IsMatched = true;
             Score += 5;
-            Message = "Znaleziono parę!";
+            Message = "Pair found!";
         }
         else
         {
-            Message = "Nie pasują!";
+            Message = "It does not match!";
             Score -= 2;
             await Task.Delay(1000);
             _firstCard.IsRevealed = false;
@@ -173,7 +173,7 @@ public class MemoryEngine : IGameEngine
         if (Cards.All (card => card.IsMatched))
         {
             IsGameOver = true;
-            Message = $"Gratulacje! Wygrałeś z wynikiem {Score}!";
+            Message = $"Huge Win!!! Your score is {Score}!";
         }
     }
 }

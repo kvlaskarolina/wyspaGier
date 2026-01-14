@@ -5,12 +5,12 @@ namespace QuickFun.Games.Engines.TicTacToe
     public class TicTacToeEngine : IGameEngine
     {
         public GameType Type => GameType.TicTacToe;
-        public string Name => "Kółko i Krzyżyk";
+        public string Name => "TicTacToe";
         public int Score { get; protected set; } = 0;
         public char[] Board { get; protected set; } = new char[9];
         public char CurrentPlayer { get; protected set; } = 'X';
         public bool IsGameOver { get; protected set; }
-        public string Message { get; protected set; } = "Zaczyna X";
+        public string Message { get; protected set; } = "X starts";
 
         public TicTacToeEngine()
         {
@@ -23,7 +23,7 @@ namespace QuickFun.Games.Engines.TicTacToe
             CurrentPlayer = 'X';
             IsGameOver = false;
             Score = 0;
-            Message = "Zaczyna X";
+            Message = "X starts";
         }
 
         public void MakeMove(int index)
@@ -34,20 +34,20 @@ namespace QuickFun.Games.Engines.TicTacToe
 
             if (CheckWinner())
             {
-                Message = $"Wygrał gracz: {CurrentPlayer}!";
+                Message = $"{CurrentPlayer} WON!";
                 IsGameOver = true;
                 Score = 1;
             }
             else if (Board.All(c => c != '\0'))
             {
-                Message = "Remis!";
+                Message = "DRAW!";
                 IsGameOver = true;
                 Score = 0;
             }
             else
             {
                 CurrentPlayer = (CurrentPlayer == 'X') ? 'O' : 'X';
-                Message = $"Ruch gracza: {CurrentPlayer}";
+                Message = $"{CurrentPlayer}'s turn";
             }
         }
 

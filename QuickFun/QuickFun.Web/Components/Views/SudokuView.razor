@@ -6,17 +6,17 @@
     {
         <div class="loading-status">
             <div class="spinner-border text-primary" role="status"></div>
-            <p>Haskell generuje Twoją planszę...</p>
+            <p>Generating...</p>
         </div>
     }
     else if (Engine.Board == null)
     {
         <div class="difficulty-selection">
-            <h3>Wybierz poziom trudności</h3>
+            <h3>Choose difficulty</h3>
             <div class="difficulty-buttons">
-                <button class="btn btn-success" @onclick=@(() => SelectDifficulty("easy"))>Łatwy</button>
-                <button class="btn btn-warning" @onclick=@(() => SelectDifficulty("medium"))>Średni</button>
-                <button class="btn btn-danger" @onclick=@(() => SelectDifficulty("hard"))>Trudny</button>
+                <button class="btn-diff easy" @onclick=@(() => SelectDifficulty("easy"))>Easy</button>
+                <button class="btn-diff medium" @onclick=@(() => SelectDifficulty("medium"))>Medium</button>
+                <button class="btn-diff hard" @onclick=@(() => SelectDifficulty("hard"))>Hard</button>
             </div>
         </div>
     }
@@ -99,12 +99,33 @@
         -webkit-appearance: none;
     }
 
-    .difficulty-buttons {
-        display: flex;
-        gap: 10px;
-        justify-content: center;
-        margin-top: 15px;
+       .btn-diff {
+        padding: 15px;
+        border: none;
+        border-radius: 8px;
+        font-weight: bold;
+        color: white;
+        cursor: pointer;
+        transition: transform 0.2s;
+        font-size: 1.1rem;
     }
+
+    .btn-diff:hover {
+        transform: scale(1.02);
+    }
+
+    .easy {
+        background-color: #27ae60;
+    }
+
+    .medium {
+        background-color: #f39c12;
+    }
+
+    .hard {
+        background-color: #e74c3c;
+    }
+
 </style>
 
 @code {

@@ -1,7 +1,6 @@
 using QuickFun.Games.TicTacToe.Strategies;
 using QuickFun.Domain.Enums;
 using QuickFun.Games.Engines;
-using System.Reflection;
 
 namespace QuickFun.Games.Engines.TicTacToe.AI
 {
@@ -9,6 +8,7 @@ namespace QuickFun.Games.Engines.TicTacToe.AI
     public class TicTacToeEngineWithAI : TicTacToeEngine
     {
         private ITicTacToeDifficultyStrategy _aiStrategy;
+        private readonly CommandHistory _history = new CommandHistory();
 
         public TicTacToeEngineWithAI(ITicTacToeDifficultyStrategy strategy)
         {
@@ -23,15 +23,21 @@ namespace QuickFun.Games.Engines.TicTacToe.AI
         public new void Reset()
         {
             base.Reset();
-            if (_aiStrategy == null)
-            {
-                _aiStrategy = new TicTacToeMediumStrategy();
-            }
+            _history.Clear();
+            if (_aiStrategy == null) _aiStrategy = new TicTacToeMediumStrategy();
         }
 
-        public void ResetGame()
+        public void ResetGame() => Reset();
+
+        public void Undo()
         {
-            Reset();
+            if (IsGameOver) IsGameOver = false;
+
+            _history.UndoLast();
+            _history.UndoLast();
+
+            CurrentPlayer = 'X';
+            Message = "Undo performed.";
         }
 
         public void SetDifficulty(Level level)
@@ -50,53 +56,26 @@ namespace QuickFun.Games.Engines.TicTacToe.AI
             if (IsGameOver || index < 0 || index >= Board.Length || Board[index] != '\0')
                 return;
 
-            Board[index] = CurrentPlayer;
+            // Ruch Gracza przez Command
+            var playerCmd = new MoveCommand(Board, index, CurrentPlayer, () => { });
+            _history.ExecuteCommand(playerCmd);
 
-            if (CheckWinner())
-            {
-                Message = "You WON!";
-                IsGameOver = true;
-                Score = 1;
-                return;
-            }
-
-            if (IsBoardFull())
-            {
-                Message = "DRAW!";
-                IsGameOver = true;
-                Score = 0;
-                return;
-            }
+            if (CheckWinner()) { Message = "You WON!"; IsGameOver = true; Score = 1; return; }
+            if (IsBoardFull()) { Message = "DRAW!"; IsGameOver = true; Score = 0; return; }
 
             CurrentPlayer = 'O';
-
             await Task.Delay(500);
-            Message = "";
-            int aiMove = MakeAIMove();
 
+            int aiMove = MakeAIMove();
             if (aiMove != -1)
             {
-                Board[aiMove] = CurrentPlayer;
+                var aiCmd = new MoveCommand(Board, aiMove, CurrentPlayer, () => { });
+                _history.ExecuteCommand(aiCmd);
 
-                if (CheckWinner())
-                {
-                    Message = "TAKE THE L LOOSER!";
-                    IsGameOver = true;
-                    Score = -1;
-                    return;
-                }
-
-                if (IsBoardFull())
-                {
-                    Message = "DRAW!";
-                    IsGameOver = true;
-                    Score = 0;
-                    return;
-                }
+                if (CheckWinner()) { Message = "TAKE THE L LOOSER!"; IsGameOver = true; Score = -1; return; }
+                if (IsBoardFull()) { Message = "DRAW!"; IsGameOver = true; Score = 0; return; }
 
                 CurrentPlayer = 'X';
-
-
             }
         }
 
@@ -117,9 +96,9 @@ namespace QuickFun.Games.Engines.TicTacToe.AI
                     int index = i * 3 + j;
                     board2D[i][j] = Board[index] switch
                     {
-                        '\0' => 0,  // Puste pole
-                        'X' => 1,   // Gracz
-                        'O' => 2,   // AI
+                        '\0' => 0,
+                        'X' => 1,
+                        'O' => 2,
                         _ => 0
                     };
                 }
@@ -127,9 +106,6 @@ namespace QuickFun.Games.Engines.TicTacToe.AI
             return board2D;
         }
 
-        private bool IsBoardFull()
-        {
-            return Board.All(c => c != '\0');
-        }
+        private bool IsBoardFull() => Board.All(c => c != '\0');
     }
 }

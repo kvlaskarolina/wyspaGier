@@ -1,15 +1,15 @@
 using QuickFun.Domain.Entities.Sudoku;
 using QuickFun.Domain.Enums;
 using System.Net.Http.Json;
-
+using QuickFun.Games.Base;
 namespace QuickFun.Games.Engines.Sudoku;
 
 
-public class SudokuEngine : IGameEngine
+public class SudokuEngine : BaseGameEngine
 {
     private readonly HttpClient _httpClient;
-    public string Name => "Sudoku";
-    public GameType Type => GameType.Sudoku;
+    public override string Name => "Sudoku";
+    public override GameType Type => GameType.Sudoku;
     public int Score => 0;
     public int[][]? Board { get; private set; }
     public bool[][]? IsOriginal { get; private set; }

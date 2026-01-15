@@ -37,12 +37,19 @@
             </button>
         }
     </div>
+    <button class="btn btn-secondary" @onclick="UndoMove" disabled="@Engine.IsGameOver">
+        Undo Move
+    </button>
 </div>
 
 @code {
     [Parameter]
     public TicTacToeEngineWithAI Engine { get; set; }
     private Level selectedLevel = Level.Medium;
+    private void UndoMove()
+    {
+        Engine.Undo();
+    }
 
     private void SetDifficulty(Level level)
     {

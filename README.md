@@ -98,18 +98,8 @@ Then press `F5` to run with debugging.
 This project follows:
 - **Clean Architecture** - Separation of concerns across layers
 - **SOLID Principles** - Maintainable and scalable code
-- **Design Patterns** - Repository, Factory, Strategy, CQRS, Observer
+- **Design Patterns** - Repository, Factory, Strategy, Observer, State, Command
 
----
-
-## Technologies
-
-- **Blazor WebAssembly** - Frontend framework
-- **Entity Framework Core** - ORM
-- **MediatR** - CQRS implementation
-- **AutoMapper** - Object mapping
-- **FluentValidation** - Input validation
-- **xUnit** - Testing framework
 
 ---
 

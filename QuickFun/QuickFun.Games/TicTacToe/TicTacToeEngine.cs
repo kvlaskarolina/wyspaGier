@@ -1,11 +1,12 @@
 using QuickFun.Domain.Enums;
-
+using QuickFun.Games.Base;
+using System.Linq;
 namespace QuickFun.Games.Engines.TicTacToe
 {
-    public class TicTacToeEngine : IGameEngine
+    public class TicTacToeEngine : BaseGameEngine
     {
-        public GameType Type => GameType.TicTacToe;
-        public string Name => "TicTacToe";
+        public override GameType Type => GameType.TicTacToe;
+        public override string Name => "TicTacToe";
         public int Score { get; protected set; } = 0;
         public char[] Board { get; protected set; } = new char[9];
         public char CurrentPlayer { get; protected set; } = 'X';

@@ -4,6 +4,7 @@ using System.Runtime.InteropServices.Marshalling;
 using System.Security.Cryptography;
 using QuickFun.Domain.Enums;
 using QuickFun.Games.Minesweeper.Strategies;
+using QuickFun.Games.Base;
 
 namespace QuickFun.Games.Minesweeper;
 
@@ -19,11 +20,11 @@ public class MinesweeperCell
     public bool ShouldShowNumber => IsRevealed && !IsMine && AdjMines > 0;
 }
 
-public class MinesweeperEngine : IGameEngine
+public class MinesweeperEngine : BaseGameEngine
 {
     public event Action? OnStateChanged;
-    public GameType Type => GameType.Minesweeper;
-    public string Name => "Saper";
+    public override GameType Type => GameType.Minesweeper;
+    public override string Name => "Saper";
     public int Score { get; private set; } = 0;
     public MinesweeperCell[,] Board { get; private set; }
     public bool IsGameOver { get; private set; }

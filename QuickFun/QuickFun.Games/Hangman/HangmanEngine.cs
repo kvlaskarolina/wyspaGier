@@ -4,13 +4,14 @@ using QuickFun.Games.Hangman.WordProviders;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using QuickFun.Games.Base;
 
 namespace QuickFun.Games.Hangman
 {
-    public class HangmanEngine : IGameEngine
+    public class HangmanEngine : BaseGameEngine
     {
-        public GameType Type => GameType.Hangman;
-        public string Name => "Hangman";
+        public override GameType Type => GameType.Hangman;
+        public override string Name => "Hangman";
         public int Score { get; set; } = 0;
 
         public string WordToGuess { get; private set; } = string.Empty;

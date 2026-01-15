@@ -5,7 +5,9 @@ using QuickFun.Games.Memory.Strategies;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Collections.Generic;
+using QuickFun.Games.Base;
 namespace QuickFun.Games.Memory;
+
 
 public class MemoryCard
 {
@@ -15,13 +17,13 @@ public class MemoryCard
     public bool IsMatched { get; set; } = false;
 }
 
-public class MemoryEngine : IGameEngine
+public class MemoryEngine : BaseGameEngine
 
 {
     private IMemoryDifficultyStrategy? _strategy;
     public int Columns => _strategy?.Columns ?? 4;
-    public GameType Type => GameType.Memory;
-    public string Name => "Memory";
+    public override GameType Type => GameType.Memory;
+    public override string Name => "Memory";
     public int Score { get; private set; } = 0;
     public List<MemoryCard> Cards { get; private set; } = new();
     public string Message { get; private set; } = "Choose difficulty";
@@ -102,7 +104,7 @@ public class MemoryEngine : IGameEngine
         {
             _isBusy = true;
             Message = $"Remember the arrangement!";
-            
+
             foreach (var card in Cards) card.IsRevealed = true;
             await onStateChanged();
 
@@ -170,7 +172,7 @@ public class MemoryEngine : IGameEngine
 
     private void CheckWin()
     {
-        if (Cards.All (card => card.IsMatched))
+        if (Cards.All(card => card.IsMatched))
         {
             IsGameOver = true;
             Message = $"Huge Win!!! Your score is {Score}!";

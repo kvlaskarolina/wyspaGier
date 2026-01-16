@@ -35,7 +35,6 @@ namespace QuickFun.Games
                 GameType.TicTacToe => new TicTacToeEngine(),
                 GameType.Memory => new MemoryEngine(),
                 GameType.Minesweeper => new MinesweeperEngine(new QuickFun.Games.Minesweeper.Strategies.DfsFloodingStrategy()),
-                GameType.Snake => new SnakeEngine(),
                 GameType.Hangman => HangmanFactory.CreateGame(),
                 GameType.Sudoku => new SudokuEngine(_httpClientFactory.CreateClient("SudokuApi")),
                 _ => throw new ArgumentException("Nieznana gra")
